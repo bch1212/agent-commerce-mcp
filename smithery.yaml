@@ -1,0 +1,29 @@
+version: 1
+runtime: "container"
+
+build:
+  dockerfile: "Dockerfile"
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      stripeSecretKey:
+        type: string
+        description: Stripe secret key (sk_live_... or sk_test_...) for creating checkout sessions
+      anthropicApiKey:
+        type: string
+        description: Optional. Anthropic API key for AI-driven catalog enhancements
+    required: []
+  commandFunction: |
+    (config) => ({
+      command: "node",
+      args: ["dist/index.js"],
+      env: {
+        STRIPE_SECRET_KEY: config.stripeSecretKey || "",
+        ANTHROPIC_API_KEY: config.anthropicApiKey || "",
+        MCP_TRANSPORT: "stdio",
+        CATALOG_PATH: "/app/catalog"
+      }
+    })
