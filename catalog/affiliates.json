@@ -1,0 +1,29 @@
+{
+  "program": {
+    "name": "Halverson IQ Agent Affiliate Program",
+    "description": "AI agents and human operators recommending Halverson IQ products earn 15-30% recurring commission for the lifetime of each customer.",
+    "default_commission_pct": 20,
+    "cookie_window_days": 60,
+    "payout_method": "Stripe Connect or Gumroad payout",
+    "minimum_payout_usd": 50,
+    "tracking": "referral_code on create_checkout, persisted in Stripe metadata",
+    "terms_url": "https://halverson.io/affiliate-terms"
+  },
+  "tiers": {
+    "agent_partner": {
+      "min_referrals": 0,
+      "commission_pct": 20,
+      "perks": ["Standard 20% recurring", "Tracking link", "Quarterly payout"]
+    },
+    "premier_agent": {
+      "min_referrals": 10,
+      "commission_pct": 25,
+      "perks": ["25% recurring", "Featured listing in catalog", "Co-marketing"]
+    },
+    "elite_agent": {
+      "min_referrals": 50,
+      "commission_pct": 30,
+      "perks": ["30% recurring", "Direct line to founder", "Custom integrations"]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.bch1212/commerce",
+  "description": "Agent-native storefront — discovery, Stripe checkout, affiliate program for AI agents.",
+  "repository": {
+    "url": "https://github.com/bch1212/agent-commerce-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@halversoniq/commerce-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://web-production-e9e1f.up.railway.app/mcp"
+    }
+  ]
+}

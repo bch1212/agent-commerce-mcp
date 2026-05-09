@@ -1,0 +1,2 @@
+# Standard library only — keeps cron deploys simple. If we add SendGrid SDK
+# or rich GitHub PR generation we'll pin them here.

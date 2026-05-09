@@ -1,0 +1,28 @@
+{
+  "graph": {
+    "agentfetch": ["injectshield", "queryshield", "modelwatch"],
+    "queryshield": ["injectshield", "modelwatch", "regimpact"],
+    "injectshield": ["queryshield", "modelwatch", "agentfetch"],
+    "modelwatch": ["injectshield", "queryshield", "agentfetch"],
+    "regimpact": ["compliancebeacon", "injectshield", "modelwatch"],
+    "compliancebeacon": ["regimpact", "branded_audits", "injectshield"],
+    "branded_audits": ["leadvault", "compliancebeacon", "bizintel_mcp"],
+    "leadvault": ["branded_audits", "jobauditor", "bizintel_mcp"],
+    "jobauditor": ["leadvault", "branded_audits", "compliancebeacon"],
+    "castiq": ["outdooriq_mcp", "gumroad"],
+    "grantiq": ["compliancebeacon", "regimpact"],
+    "focusiq": ["modelwatch", "gumroad"],
+    "catholic_daily": ["focusiq", "gumroad"],
+    "gumroad": ["leadvault", "branded_audits"]
+  },
+  "bundle_prefer": {
+    "agentfetch": "ai_builder_essentials",
+    "injectshield": "ai_security_stack",
+    "queryshield": "ai_security_stack",
+    "modelwatch": "ai_security_stack",
+    "regimpact": "ai_builder_essentials",
+    "branded_audits": "agency_growth_kit",
+    "leadvault": "agency_growth_kit",
+    "compliancebeacon": "agency_growth_kit"
+  }
+}

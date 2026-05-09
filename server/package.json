@@ -1,0 +1,59 @@
+{
+  "name": "@halversoniq/commerce-mcp",
+  "version": "0.1.0",
+  "description": "Agent Commerce MCP — autonomous A2A storefront for the Halverson IQ portfolio: 14 products + 8 MCP servers, Stripe/Gumroad checkout, affiliate program, AgentTrust verification.",
+  "license": "MIT",
+  "author": "Brett Halverson <brett.halverson@gmail.com>",
+  "homepage": "https://halverson.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bch1212/agent-commerce-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bch1212/agent-commerce-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "agent-commerce",
+    "ai-agents",
+    "stripe",
+    "affiliate",
+    "marketplace"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "commerce-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "catalog/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "mcpName": "io.github.bch1212/commerce",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:http": "MCP_TRANSPORT=http node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import tsx dist/test/*.test.js || true"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "express": "^4.21.2",
+    "stripe": "^18.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

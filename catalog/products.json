@@ -1,0 +1,381 @@
+{
+  "version": "1.0.0",
+  "vendor": {
+    "name": "Halverson IQ",
+    "operator": "Brett Halverson",
+    "website": "https://halverson.io",
+    "trust_mcp": "mcp-agenttrust-production.up.railway.app/mcp",
+    "agenttrust_id": "halversoniq"
+  },
+  "products": [
+    {
+      "slug": "castiq",
+      "name": "CastIQ",
+      "category": "saas",
+      "tagline": "AI fishing intelligence for anglers and guides",
+      "description": "Predictive fishing reports with hyperlocal water/weather data, species recommendations, and AI-generated reports. Built for anglers 25-55 and fishing guides who need to know where, when, and what to fish.",
+      "domain": "castiq.net",
+      "url": "https://castiq.net",
+      "icp": "Anglers 25-55, fishing guides",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "stripe_price_id": null, "features": ["3 spot reports/week", "Basic species data"]},
+        {"name": "Pro", "price_monthly": 5.99, "price_yearly": 59.99, "stripe_price_id": "price_castiq_pro_m", "features": ["Unlimited spot reports", "Hyperlocal forecasts", "Species AI"]},
+        {"name": "Guide", "price_monthly": 14.99, "price_yearly": 149.99, "stripe_price_id": "price_castiq_guide_m", "features": ["Multi-client tracking", "Priority data", "White-label reports"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["fishing", "outdoor", "saas", "ai", "weather"]
+    },
+    {
+      "slug": "grantiq",
+      "name": "GrantIQ",
+      "category": "saas",
+      "tagline": "AI grants intelligence for nonprofits",
+      "description": "Discover, qualify, and draft grants in minutes. Live federal + foundation grant database, eligibility checks, and AI-drafted applications.",
+      "domain": "grantiq.us",
+      "url": "https://grantiq.us",
+      "icp": "Nonprofit EDs, grant writers, dev directors",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "stripe_price_id": null, "features": ["10 searches/mo", "Basic eligibility"]},
+        {"name": "Pro", "price_monthly": 29, "price_yearly": 290, "stripe_price_id": "price_grantiq_pro_m", "features": ["Unlimited searches", "AI drafting", "Deadline tracker"]},
+        {"name": "Team", "price_monthly": 99, "price_yearly": 990, "stripe_price_id": "price_grantiq_team_m", "features": ["5 seats", "Submission tracking", "Priority support"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 25,
+      "tags": ["grants", "nonprofit", "saas", "ai"]
+    },
+    {
+      "slug": "focusiq",
+      "name": "FocusIQ",
+      "category": "saas",
+      "tagline": "AI productivity coach for ADHD adults",
+      "description": "Body-doubling AI, context-switch reduction, and energy-aware task prioritization for ADHD knowledge workers.",
+      "domain": "focusiq.app",
+      "url": "https://focusiq.app",
+      "icp": "ADHD adults, productivity seekers",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["3 sessions/day"]},
+        {"name": "Pro", "price_monthly": 9.99, "price_yearly": 49.99, "stripe_price_id": "price_focusiq_pro_m", "features": ["Unlimited sessions", "Energy tracking", "Slack integration"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["adhd", "productivity", "ai", "saas"]
+    },
+    {
+      "slug": "catholic_daily",
+      "name": "Catholic Daily",
+      "category": "saas",
+      "tagline": "Daily Mass readings, saints, and prayer for Catholic faithful",
+      "description": "AI-curated daily readings, saint stories, and contemplative prayer prompts. Designed for daily use by Catholic faithful.",
+      "domain": "catholicdaily.app",
+      "url": "https://catholicdaily.app",
+      "icp": "Catholic faithful, daily Mass attendees",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["Daily readings", "Saint of the day"]},
+        {"name": "Plus", "price_monthly": 3.99, "stripe_price_id": "price_catholic_plus_m", "features": ["Liturgy of the hours", "Audio readings"]},
+        {"name": "Family", "price_monthly": 9.99, "stripe_price_id": "price_catholic_family_m", "features": ["6 family members", "Lectionary archive"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 15,
+      "tags": ["catholic", "faith", "prayer", "daily"]
+    },
+    {
+      "slug": "agentfetch",
+      "name": "AgentFetch",
+      "category": "developer",
+      "tagline": "Web fetching MCP optimized for AI agents",
+      "description": "Token-efficient web fetching MCP server. Returns clean markdown, structured JSON, and citation-ready snippets for LLM agents. 500 free calls, $0.001/call after.",
+      "domain": "agentfetch.dev",
+      "url": "https://agentfetch.dev",
+      "icp": "AI agent developers, LLM application builders",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["500 calls/mo", "Markdown output"]},
+        {"name": "Usage", "price_per_call": 0.001, "features": ["Pay-as-you-go", "$0.001/call", "No monthly minimum"]},
+        {"name": "Scale", "price_monthly": 99, "stripe_price_id": "price_agentfetch_scale_m", "features": ["100K calls included", "Priority queue"]}
+      ],
+      "free_tier_command": "npx -y @agentfetch/mcp",
+      "mcp_install": {
+        "claude_desktop": "{\"mcpServers\": {\"agentfetch\": {\"command\": \"npx\", \"args\": [\"-y\", \"@agentfetch/mcp\"]}}}",
+        "cursor": "npx -y @agentfetch/mcp",
+        "claude_code": "claude mcp add agentfetch npx -y @agentfetch/mcp"
+      },
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["mcp", "developer", "ai-agents", "web-fetching", "api"]
+    },
+    {
+      "slug": "queryshield",
+      "name": "QueryShield",
+      "category": "developer",
+      "tagline": "AI-native query firewall for SQL/NoSQL APIs",
+      "description": "Semantic SQL injection detection plus runtime query risk scoring for AI agents and SaaS APIs. Catches PII leaks, schema enumeration, and prompt-injection-driven queries.",
+      "domain": "queryshield.dev",
+      "url": "https://queryshield.dev",
+      "mcp_endpoint": "https://queryshield-api-production.up.railway.app/mcp",
+      "icp": "Engineering leads and security at AI SaaS",
+      "tiers": [
+        {"name": "Starter", "price_monthly": 500, "stripe_price_id": "price_queryshield_starter_m", "features": ["1M queries/mo", "Slack alerts", "5 schemas"]},
+        {"name": "Growth", "price_monthly": 1500, "stripe_price_id": "price_queryshield_growth_m", "features": ["10M queries/mo", "Custom rules", "SOC2 reports"]},
+        {"name": "Enterprise", "price_monthly": 3500, "stripe_price_id": "price_queryshield_ent_m", "features": ["Unlimited", "Dedicated tenant", "SLA"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 25,
+      "tags": ["security", "sql", "mcp", "developer", "ai"]
+    },
+    {
+      "slug": "injectshield",
+      "name": "InjectShield",
+      "category": "developer",
+      "tagline": "Prompt-injection firewall for LLM apps",
+      "description": "Heuristic + Anthropic-Haiku semantic prompt-injection detection. Blocks jailbreaks, data exfiltration, and tool-poisoning at the perimeter. 10K free scans/month.",
+      "domain": "injectshield.dev",
+      "url": "https://injectshield.dev",
+      "mcp_install_npm": "@injectshield/mcp",
+      "icp": "AI developers handling untrusted text",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["10K scans/mo", "Heuristic engine"]},
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_injectshield_pro_m", "features": ["100K scans", "Semantic engine"]},
+        {"name": "Team", "price_monthly": 99, "stripe_price_id": "price_injectshield_team_m", "features": ["1M scans", "Custom rulesets"]},
+        {"name": "Enterprise", "price_monthly": 499, "stripe_price_id": "price_injectshield_ent_m", "features": ["Unlimited", "On-prem", "SLA"]}
+      ],
+      "free_tier_command": "npx -y @injectshield/mcp",
+      "mcp_install": {
+        "claude_desktop": "{\"mcpServers\": {\"injectshield\": {\"command\": \"npx\", \"args\": [\"-y\", \"@injectshield/mcp\"], \"env\": {\"INJECTSHIELD_API_KEY\": \"<key>\"}}}}",
+        "cursor": "npx -y @injectshield/mcp",
+        "claude_code": "claude mcp add injectshield npx -y @injectshield/mcp"
+      },
+      "checkout_provider": "stripe",
+      "affiliate_rate": 25,
+      "tags": ["security", "prompt-injection", "mcp", "developer", "ai-safety"]
+    },
+    {
+      "slug": "modelwatch",
+      "name": "ModelWatch",
+      "category": "developer",
+      "tagline": "Multi-provider LLM observability and cost guardrails",
+      "description": "Per-request cost, latency, and quality telemetry for Anthropic/OpenAI/Gemini/Groq. Drift alerts, budget caps, and side-by-side model evals.",
+      "domain": "modelwatch.app",
+      "url": "https://modelwatch.app",
+      "mcp_install_npm": "@modelwatch/mcp",
+      "icp": "AI engineers, ML platform leads",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["100K events/mo"]},
+        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_modelwatch_pro_m", "features": ["1M events", "Custom dashboards"]},
+        {"name": "Team", "price_monthly": 299, "stripe_price_id": "price_modelwatch_team_m", "features": ["10M events", "Eval suite"]},
+        {"name": "Enterprise", "price_monthly": 999, "stripe_price_id": "price_modelwatch_ent_m", "features": ["Unlimited", "VPC peering"]}
+      ],
+      "free_tier_command": "npx -y @modelwatch/mcp",
+      "mcp_install": {
+        "claude_desktop": "{\"mcpServers\": {\"modelwatch\": {\"command\": \"npx\", \"args\": [\"-y\", \"@modelwatch/mcp\"]}}}",
+        "claude_code": "claude mcp add modelwatch npx -y @modelwatch/mcp"
+      },
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["observability", "llm", "mcp", "developer", "cost"]
+    },
+    {
+      "slug": "compliancebeacon",
+      "name": "ComplianceBeacon",
+      "category": "developer",
+      "tagline": "AI-tool compliance scanning for SMBs",
+      "description": "Continuous SOC2-lite scanning of every AI tool your company uses. Tracks data residency, model provider terms, and SubProcessor lists.",
+      "domain": "compliancebeacon.app",
+      "url": "https://compliancebeacon.app",
+      "icp": "SMBs adopting AI tools, IT/compliance leads",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["5 tools tracked"]},
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_compliancebeacon_pro_m", "features": ["50 tools", "Quarterly reports"]},
+        {"name": "Team", "price_monthly": 79, "stripe_price_id": "price_compliancebeacon_team_m", "features": ["200 tools", "Audit prep"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["compliance", "soc2", "ai-tools", "saas"]
+    },
+    {
+      "slug": "regimpact",
+      "name": "RegImpact",
+      "category": "developer",
+      "tagline": "AI regulatory impact scanner for indie founders",
+      "description": "Scans your product against EU AI Act, US state-level AI laws, GDPR, and SOC2. Returns a prioritized risk list and explainer per regulation.",
+      "domain": "regimpact.dev",
+      "url": "https://regimpact.dev",
+      "icp": "Indie AI founders, solo SaaS builders",
+      "tiers": [
+        {"name": "Solo", "price_monthly": 49, "stripe_price_id": "price_regimpact_solo_m", "features": ["1 product", "EU AI Act + GDPR"]},
+        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_regimpact_pro_m", "features": ["3 products", "All regs"]},
+        {"name": "Team", "price_monthly": 199, "stripe_price_id": "price_regimpact_team_m", "features": ["10 products", "Audit-ready exports"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 25,
+      "tags": ["compliance", "regulation", "ai-act", "gdpr", "saas"]
+    },
+    {
+      "slug": "branded_audits",
+      "name": "Branded Audits",
+      "category": "service",
+      "tagline": "White-label SEO/perf audits for marketing agencies",
+      "description": "Automated SEO + Core Web Vitals audits, branded with the agency's logo. Sell as a service tier, included in retainers, or as lead magnets.",
+      "domain": "brandedaudits.com",
+      "url": "https://brandedaudits.com",
+      "icp": "Digital marketing agencies, freelance marketers",
+      "tiers": [
+        {"name": "Starter", "price_monthly": 49, "stripe_price_id": "price_branded_starter_m", "features": ["10 audits/mo", "Logo customization"]},
+        {"name": "Pro", "price_monthly": 149, "stripe_price_id": "price_branded_pro_m", "features": ["50 audits", "Custom domain"]},
+        {"name": "Agency", "price_monthly": 299, "stripe_price_id": "price_branded_agency_m", "features": ["Unlimited", "API access"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 30,
+      "tags": ["seo", "agency", "audit", "white-label"]
+    },
+    {
+      "slug": "leadvault",
+      "name": "LeadVault",
+      "category": "service",
+      "tagline": "Curated B2B lead lists for agencies and web designers",
+      "description": "Vertical-specific lead lists — restaurants, dentists, contractors — with verified contacts and OSM-sourced firmographics. Quarterly refreshed.",
+      "domain": "leadvault.halversonco.com",
+      "url": "https://leadvault.halversonco.com",
+      "icp": "Web designers, marketing agencies, sales teams",
+      "tiers": [
+        {"name": "Single List", "price_one_time": 57, "checkout_url": "https://halversoniq.gumroad.com/l/leadvault-single", "features": ["1 list (~150 leads)"]},
+        {"name": "5-Pack", "price_one_time": 227, "checkout_url": "https://halversoniq.gumroad.com/l/leadvault-pack", "features": ["5 lists", "20% off"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "gumroad",
+      "affiliate_rate": 30,
+      "tags": ["leads", "b2b", "data", "agency"]
+    },
+    {
+      "slug": "jobauditor",
+      "name": "JobAuditor",
+      "category": "service",
+      "tagline": "AI bias and clarity audits for job posts",
+      "description": "Scans job descriptions for bias, jargon, and unclear requirements. PWYW pricing — recruiters keep more candidates by writing better posts.",
+      "domain": "jobauditor.com",
+      "url": "https://jobauditor.com",
+      "icp": "Recruiters, HR managers, talent ops",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["3 audits/mo"]},
+        {"name": "PWYW", "price_one_time": 0, "features": ["Pay what you want", "Unlimited audits"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "stripe",
+      "affiliate_rate": 20,
+      "tags": ["recruiting", "hr", "bias", "jobs"]
+    },
+    {
+      "slug": "gumroad",
+      "name": "Halverson IQ Digital Library",
+      "category": "service",
+      "tagline": "Templates, prompts, and playbooks for solo operators",
+      "description": "Curated digital downloads — AI agent system prompts, founder financial templates, lead-gen playbooks.",
+      "domain": "halversoniq.gumroad.com",
+      "url": "https://halversoniq.gumroad.com",
+      "icp": "Freelancers, solo founders, small biz owners",
+      "tiers": [
+        {"name": "Free", "price_one_time": 0, "features": ["Free downloads"]},
+        {"name": "Premium", "price_one_time": 19, "features": ["$5-19 templates"]}
+      ],
+      "free_tier_command": null,
+      "checkout_provider": "gumroad",
+      "affiliate_rate": 30,
+      "tags": ["templates", "digital", "playbooks", "solo"]
+    }
+  ],
+  "mcp_servers": [
+    {
+      "slug": "grantiq_mcp",
+      "name": "GrantIQ MCP",
+      "endpoint": "https://mcp-grantiq.up.railway.app/mcp",
+      "npm": null,
+      "registry_id": "io.github.bch1212/grantiq",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["50 queries/day"]},
+        {"name": "Pro", "price_monthly": 19, "stripe_price_id": "price_grantiq_mcp_pro_m", "features": ["Unlimited queries", "Priority"]}
+      ],
+      "tags": ["grants", "nonprofit", "mcp"]
+    },
+    {
+      "slug": "outdooriq_mcp",
+      "name": "OutdoorIQ MCP",
+      "endpoint": "https://web-production-9b8950.up.railway.app/mcp",
+      "alt_endpoint": "https://mcp.castiq.net/mcp",
+      "registry_id": "io.github.bch1212/outdooriq-mcp",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["50 queries/day"]},
+        {"name": "Pro", "price_monthly": 14, "stripe_price_id": "price_outdooriq_mcp_pro_m", "features": ["Unlimited queries"]}
+      ],
+      "tags": ["fishing", "outdoor", "weather", "mcp"]
+    },
+    {
+      "slug": "bizintel_mcp",
+      "name": "BizIntel MCP",
+      "endpoint": "https://mcp-bizintel.up.railway.app/mcp",
+      "registry_id": "io.github.bch1212/bizintel",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["20 queries/day"]},
+        {"name": "Pro", "price_monthly": 19, "stripe_price_id": "price_bizintel_pro_m", "features": ["Unlimited"]}
+      ],
+      "tags": ["business", "data", "mcp"]
+    },
+    {
+      "slug": "agenttrust_mcp",
+      "name": "AgentTrust MCP",
+      "endpoint": "https://mcp-agenttrust-production.up.railway.app/mcp",
+      "registry_id": "io.github.bch1212/agenttrust",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["Trust score lookup"]}
+      ],
+      "tags": ["trust", "reputation", "mcp"]
+    },
+    {
+      "slug": "pubrecords_mcp",
+      "name": "PubRecords MCP",
+      "endpoint": "https://mcp-pubrecords-production.up.railway.app/mcp",
+      "registry_id": "io.github.bch1212/pubrecords",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["30 queries/day"]},
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_pubrecords_pro_m", "features": ["Unlimited"]}
+      ],
+      "tags": ["public-records", "data", "mcp"]
+    },
+    {
+      "slug": "queryshield_mcp",
+      "name": "QueryShield MCP",
+      "endpoint": "https://queryshield-api-production.up.railway.app/mcp",
+      "registry_id": "io.github.bch1212/queryshield",
+      "tiers": [
+        {"name": "Starter", "price_monthly": 500, "stripe_price_id": "price_queryshield_starter_m"}
+      ],
+      "tags": ["security", "sql", "mcp"]
+    },
+    {
+      "slug": "injectshield_mcp",
+      "name": "InjectShield MCP",
+      "npm": "@injectshield/mcp",
+      "registry_id": "io.github.bch1212/injectshield",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["10K scans/mo"]}
+      ],
+      "tags": ["security", "prompt-injection", "mcp"]
+    },
+    {
+      "slug": "modelwatch_mcp",
+      "name": "ModelWatch MCP",
+      "npm": "@modelwatch/mcp",
+      "registry_id": "io.github.bch1212/modelwatch",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["100K events/mo"]}
+      ],
+      "tags": ["observability", "llm", "mcp"]
+    }
+  ]
+}

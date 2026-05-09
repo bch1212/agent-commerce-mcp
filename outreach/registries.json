@@ -1,0 +1,101 @@
+{
+  "registries": [
+    {
+      "slug": "anthropic_mcp_registry",
+      "name": "Anthropic MCP Registry",
+      "url": "https://registry.modelcontextprotocol.io",
+      "submission_method": "github_workflow",
+      "submission_target": ".github/workflows/publish-mcp.yml",
+      "status": "queued",
+      "expected_id": "io.github.bch1212/commerce"
+    },
+    {
+      "slug": "smithery",
+      "name": "Smithery",
+      "url": "https://smithery.ai",
+      "submission_method": "smithery_yaml",
+      "submission_target": "smithery.yaml",
+      "status": "queued"
+    },
+    {
+      "slug": "glama",
+      "name": "Glama",
+      "url": "https://glama.ai/mcp/servers",
+      "submission_method": "api",
+      "submission_target": "https://glama.ai/api/mcp/v1/servers",
+      "status": "queued"
+    },
+    {
+      "slug": "mcp_run",
+      "name": "mcp.run",
+      "url": "https://www.mcp.run",
+      "submission_method": "github_pr",
+      "status": "discovery"
+    },
+    {
+      "slug": "pulsemcp",
+      "name": "PulseMCP",
+      "url": "https://www.pulsemcp.com",
+      "submission_method": "form",
+      "submission_target": "https://www.pulsemcp.com/submit",
+      "status": "queued"
+    },
+    {
+      "slug": "mcp_so",
+      "name": "mcp.so",
+      "url": "https://mcp.so",
+      "submission_method": "github_pr",
+      "submission_target": "https://github.com/mcp-so/mcp-so",
+      "status": "queued"
+    },
+    {
+      "slug": "mcpize",
+      "name": "MCPize",
+      "url": "https://mcpize.com",
+      "submission_method": "form",
+      "status": "discovery"
+    },
+    {
+      "slug": "awesome_mcp_servers",
+      "name": "awesome-mcp-servers",
+      "url": "https://github.com/punkpeye/awesome-mcp-servers",
+      "submission_method": "github_pr",
+      "status": "queued"
+    },
+    {
+      "slug": "awesome_claude",
+      "name": "awesome-claude",
+      "url": "https://github.com/yzfly/awesome-claude-prompts",
+      "submission_method": "github_pr",
+      "status": "queued"
+    },
+    {
+      "slug": "awesome_ai_agents",
+      "name": "awesome-ai-agents",
+      "url": "https://github.com/e2b-dev/awesome-ai-agents",
+      "submission_method": "github_pr",
+      "status": "queued"
+    },
+    {
+      "slug": "langchain_hub",
+      "name": "LangChain Hub",
+      "url": "https://smith.langchain.com/hub",
+      "submission_method": "manual",
+      "status": "discovery"
+    },
+    {
+      "slug": "openai_gpt_store",
+      "name": "OpenAI GPT Store",
+      "url": "https://chat.openai.com/gpts",
+      "submission_method": "manual",
+      "status": "discovery"
+    },
+    {
+      "slug": "crewai",
+      "name": "CrewAI Marketplace",
+      "url": "https://www.crewai.io",
+      "submission_method": "manual",
+      "status": "discovery"
+    }
+  ]
+}

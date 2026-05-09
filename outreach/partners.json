@@ -1,0 +1,48 @@
+{
+  "candidates": [
+    {
+      "slug": "perplexity_mcp",
+      "name": "Perplexity MCP",
+      "category": "search",
+      "complementary_to": ["agentfetch", "queryshield"],
+      "outreach_status": "researched",
+      "rationale": "Search agents that touch user-supplied URLs need InjectShield + AgentFetch upstream."
+    },
+    {
+      "slug": "brave_search_mcp",
+      "name": "Brave Search MCP",
+      "category": "search",
+      "complementary_to": ["agentfetch", "injectshield"],
+      "outreach_status": "researched"
+    },
+    {
+      "slug": "filesystem_mcp",
+      "name": "Filesystem MCP (anthropic ref)",
+      "category": "files",
+      "complementary_to": ["modelwatch"],
+      "outreach_status": "researched"
+    },
+    {
+      "slug": "github_mcp",
+      "name": "GitHub MCP",
+      "category": "code",
+      "complementary_to": ["regimpact", "modelwatch"],
+      "outreach_status": "researched"
+    },
+    {
+      "slug": "stripe_mcp",
+      "name": "Stripe MCP (official)",
+      "category": "payments",
+      "complementary_to": ["all"],
+      "outreach_status": "researched",
+      "rationale": "Direct integration target — agents using Stripe MCP for any commerce already are 1 step from buying our products."
+    },
+    {
+      "slug": "linear_mcp",
+      "name": "Linear MCP",
+      "category": "pm",
+      "complementary_to": ["jobauditor"],
+      "outreach_status": "researched"
+    }
+  ]
+}

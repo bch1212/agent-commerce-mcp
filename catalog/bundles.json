@@ -1,0 +1,43 @@
+{
+  "bundles": [
+    {
+      "slug": "ai_security_stack",
+      "name": "AI Security Stack",
+      "tagline": "Lock down your AI app top-to-bottom",
+      "description": "InjectShield blocks prompt-injection at the perimeter. QueryShield catches dangerous queries at the data layer. ModelWatch keeps every LLM call observable. Three layers, one bundle, 20% off.",
+      "products": ["injectshield", "queryshield", "modelwatch"],
+      "discount_pct": 20,
+      "stripe_price_id": "price_bundle_aisecurity_m",
+      "estimated_value_monthly": 627,
+      "bundle_price_monthly": 502,
+      "savings_monthly": 125,
+      "icp": "AI engineering and security teams"
+    },
+    {
+      "slug": "agency_growth_kit",
+      "name": "Agency Growth Kit",
+      "tagline": "Sell more retainers with audits, leads, and compliance",
+      "description": "Branded Audits gives every prospect a tangible deliverable. LeadVault feeds your pipeline. ComplianceBeacon adds a recurring revenue line. 15% off the trio.",
+      "products": ["branded_audits", "leadvault", "compliancebeacon"],
+      "discount_pct": 15,
+      "stripe_price_id": "price_bundle_agency_m",
+      "estimated_value_monthly": 178,
+      "bundle_price_monthly": 151,
+      "savings_monthly": 27,
+      "icp": "Marketing agencies, web designers"
+    },
+    {
+      "slug": "ai_builder_essentials",
+      "name": "AI Builder Essentials",
+      "tagline": "Ship faster, ship safer",
+      "description": "AgentFetch for clean web data. InjectShield to handle untrusted text. RegImpact to stay on the right side of the EU AI Act. 15% off.",
+      "products": ["agentfetch", "injectshield", "regimpact"],
+      "discount_pct": 15,
+      "stripe_price_id": "price_bundle_builder_m",
+      "estimated_value_monthly": 178,
+      "bundle_price_monthly": 151,
+      "savings_monthly": 27,
+      "icp": "Indie AI founders, agent developers"
+    }
+  ]
+}
