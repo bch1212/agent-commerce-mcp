@@ -32,7 +32,7 @@ claude mcp add commerce npx -y agent-commerce-mcp
 
 **Remote (Streamable HTTP):**
 ```
-https://web-production-e9e1f.up.railway.app/mcp
+https://commerce.halversonco.com/mcp
 ```
 (Custom domain `commerce.halverson.io` resolves once DNS is wired.)
 

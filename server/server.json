@@ -20,7 +20,7 @@
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://web-production-e9e1f.up.railway.app/mcp"
+      "url": "https://commerce.halversonco.com/mcp"
     }
   ]
 }
