@@ -34,8 +34,19 @@ jobs:
       - name: Copy catalog into the package directory
         run: cp -r ../catalog ./catalog
 
-      - name: Publish to npm
-        run: npm publish --provenance --access public
+      - name: Publish to npm (idempotent — skip if version already published)
+        run: |
+          set +e
+          OUT=$(npm publish --provenance --access public 2>&1)
+          CODE=$?
+          echo "$OUT"
+          if [ $CODE -ne 0 ]; then
+            if echo "$OUT" | grep -qi "cannot publish over the previously published versions\|You cannot publish over\|403\|version is forbidden"; then
+              echo "Version already published — continuing to MCP Registry submission"
+              exit 0
+            fi
+            exit $CODE
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
