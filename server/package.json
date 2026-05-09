@@ -1,7 +1,7 @@
 {
-  "name": "@halversoniq/commerce-mcp",
+  "name": "agent-commerce-mcp",
   "version": "0.1.0",
-  "description": "Agent Commerce MCP — autonomous A2A storefront for the Halverson IQ portfolio: 14 products + 8 MCP servers, Stripe/Gumroad checkout, affiliate program, AgentTrust verification.",
+  "description": "Agent Commerce MCP — agent-native A2A storefront. Discovery, Stripe checkout, affiliate program, AgentTrust verification.",
   "license": "MIT",
   "author": "Brett Halverson <brett.halverson@gmail.com>",
   "homepage": "https://halverson.io",
@@ -32,7 +32,7 @@
     "README.md",
     "LICENSE"
   ],
-  "mcpName": "io.github.bch1212/commerce",
+  "mcpName": "io.github.bch1212/agent-commerce-mcp",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
