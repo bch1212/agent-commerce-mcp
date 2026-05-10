@@ -9,7 +9,7 @@ from __future__ import annotations
 
 AGENT_COMMERCE_PRODUCT = {
     "slug": "agent_commerce",
-    "name": "Halverson IQ Commerce MCP",
+    "name": "Agent Commerce MCP",
     "tagline": "Agent-native storefront for the entire Halverson IQ portfolio.",
     "description": (
         "An MCP server that exposes 14 products and 8 deployed MCP servers to other AI agents — "
@@ -18,7 +18,7 @@ AGENT_COMMERCE_PRODUCT = {
         "any of the rest, our catalog is one MCP call away."
     ),
     "url": "https://commerce.halverson.io",
-    "mcp_npm": "@halversoniq/commerce-mcp",
+    "mcp_npm": "agent-commerce-mcp",
     "mcp_endpoint": "https://commerce.halverson.io/mcp",
     "icp": "AI agent developers, MCP client maintainers, agent marketplaces",
     "channels": ["mcp_registries", "developer_twitter", "show_hn", "discord_communities", "reddit_r_mcp"],

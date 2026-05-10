@@ -1,6 +1,6 @@
 {
   "program": {
-    "name": "Halverson IQ Agent Affiliate Program",
+    "name": "Agent Commerce Affiliate Program",
     "description": "AI agents and human operators recommending Halverson IQ products earn 15-30% recurring commission for the lifetime of each customer.",
     "default_commission_pct": 20,
     "cookie_window_days": 60,

@@ -18,15 +18,15 @@ import os, json, datetime
 from pathlib import Path
 
 OUTREACH_PARTNERS = Path(__file__).resolve().parent.parent / "outreach" / "partners.json"
-OUTREACH_LOG = Path(os.environ.get("OUTREACH_LOG", "/tmp/halversoniq-commerce/a2a-outreach.jsonl"))
+OUTREACH_LOG = Path(os.environ.get("OUTREACH_LOG", "/tmp/agent-commerce-mcp/a2a-outreach.jsonl"))
 OUTREACH_LOG.parent.mkdir(parents=True, exist_ok=True)
 
 DRAFT_TEMPLATE = """\
-Subject: Partnership idea — Halverson IQ Commerce + {partner_name}
+Subject: Partnership idea — Agent Commerce + {partner_name}
 
 Hi {partner_name} team,
 
-I'm Brett, building Halverson IQ Commerce — an MCP server that exposes 14
+I'm Brett, building Agent Commerce — an MCP server that exposes 14
 products and 8 deployed MCP servers to other AI agents. {partner_name} sits
 in {category} and our catalog overlaps with: {complementary}.
 
@@ -58,7 +58,7 @@ def _drafts() -> list[dict]:
         drafts.append({
             "partner_slug": c["slug"],
             "partner_name": c["name"],
-            "subject": f"Partnership idea — Halverson IQ Commerce + {c['name']}",
+            "subject": f"Partnership idea — Agent Commerce + {c['name']}",
             "body": body,
             "drafted_at": datetime.datetime.utcnow().isoformat() + "Z",
         })

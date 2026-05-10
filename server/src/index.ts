@@ -60,7 +60,7 @@ function buildServer(): McpServer {
         prompts: {}
       },
       instructions:
-        "Halverson IQ Commerce MCP — agent-native storefront for 14 products and 8 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`."
+        "Agent Commerce MCP — agent-native storefront for 14 products and 8 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`."
     }
   );
 
@@ -70,7 +70,7 @@ function buildServer(): McpServer {
     {
       title: "Search products",
       description:
-        "Search the Halverson IQ catalog of SaaS, developer tools, services, and MCP servers. Returns ranked matches with score and reason.",
+        "Search the catalog of SaaS, developer tools, services, and MCP servers. Returns ranked matches with score and reason.",
       inputSchema: searchProductsInput
     },
     searchProductsTool as any

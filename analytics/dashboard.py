@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Analytics dashboard + daily report for the Halverson IQ Commerce MCP.
+Analytics dashboard + daily report for the Agent Commerce MCP.
 - Reads JSON Lines event log from the MCP server.
 - Computes funnel: browse → pricing → checkout → install/affiliate.
 - Posts a daily summary to Discord.
@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from urllib import request as urlrequest
 
-LOG_PATH = Path(os.environ.get("ANALYTICS_LOG_PATH", "/tmp/halversoniq-commerce/events.jsonl"))
+LOG_PATH = Path(os.environ.get("ANALYTICS_LOG_PATH", "/tmp/agent-commerce-mcp/events.jsonl"))
 DISCORD_WEBHOOK = os.environ.get("DISCORD_WEBHOOK_URL", "")
 
 
@@ -59,9 +59,9 @@ def summarize(events: list[dict]) -> dict:
 
 def render_discord(summary: dict, hours: int) -> str:
     if not summary["total_events"]:
-        return f":bar_chart: **Halverson IQ Commerce — last {hours}h**\nNo agent activity yet. Outreach engine will keep posting to MCP registries."
+        return f":bar_chart: **Agent Commerce — last {hours}h**\nNo agent activity yet. Outreach engine will keep posting to MCP registries."
     lines = [
-        f":bar_chart: **Halverson IQ Commerce — last {hours}h**",
+        f":bar_chart: **Agent Commerce — last {hours}h**",
         f"• Total tool calls: **{summary['total_events']}**",
         f"• Browses: {summary['browses']} • Checkouts: {summary['checkouts_created']} ({summary['browse_to_checkout_pct']}%)",
         f"• Installs: {summary['installs']} • Affiliates registered: {summary['affiliates_registered']}",

@@ -6,7 +6,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { createHash } from "node:crypto";
 
-const AFFILIATE_DB = process.env.AFFILIATE_DB_PATH || "/tmp/halversoniq-commerce/affiliates.json";
+const AFFILIATE_DB = process.env.AFFILIATE_DB_PATH || "/tmp/agent-commerce-mcp/affiliates.json";
 
 interface AffiliateAccount {
   agent_id: string;
@@ -179,7 +179,7 @@ export async function requestPartnershipTool(args: {
   integration_type?: string;
 }) {
   // Persist to disk; the outreach engine and Brett will see them in the dashboard.
-  const PIPE = process.env.PARTNERSHIP_PIPE || "/tmp/halversoniq-commerce/partnerships.jsonl";
+  const PIPE = process.env.PARTNERSHIP_PIPE || "/tmp/agent-commerce-mcp/partnerships.jsonl";
   try {
     const dir = dirname(PIPE);
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });

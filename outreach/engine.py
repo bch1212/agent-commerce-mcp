@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Outreach engine for Halverson IQ Commerce MCP.
+Outreach engine for Agent Commerce MCP.
 
 Daily run does:
 1. Loads registries.json (known MCP directories) and the listing template.
@@ -65,9 +65,9 @@ def submit_glama(listing_md: str) -> tuple[bool, str]:
     if DRY_RUN:
         return True, "DRY_RUN — would have POSTed to Glama"
     body = {
-        "name": "Halverson IQ Commerce",
-        "id": "halversoniq-commerce",
-        "npm": "@halversoniq/commerce-mcp",
+        "name": "Agent Commerce",
+        "id": "agent-commerce-mcp",
+        "npm": "agent-commerce-mcp",
         "description": "Agent-native storefront for 14 products and 8 MCP servers.",
         "readme": listing_md,
         "tags": ["commerce", "stripe", "affiliate", "marketplace"],
@@ -133,19 +133,19 @@ def run_registry_submissions() -> list[dict]:
         elif method == "github_pr" and reg["slug"] == "awesome_mcp_servers":
             ok, detail = open_github_pr_issue(
                 "punkpeye/awesome-mcp-servers",
-                "Add Halverson IQ Commerce MCP",
+                "Add Agent Commerce MCP",
                 listing,
             )
         elif method == "github_pr" and reg["slug"] == "mcp_so":
             ok, detail = open_github_pr_issue(
                 "chatmcp/mcp-directory",
-                "Add Halverson IQ Commerce MCP",
+                "Add Agent Commerce MCP",
                 listing,
             )
         elif method == "github_pr" and reg["slug"] == "awesome_ai_agents":
             ok, detail = open_github_pr_issue(
                 "e2b-dev/awesome-ai-agents",
-                "Add Halverson IQ Commerce MCP",
+                "Add Agent Commerce MCP",
                 listing,
             )
         else:
@@ -173,7 +173,7 @@ def main() -> None:
     submitted = sum(1 for r in results if r["ok"])
     blocked = sum(1 for r in results if not r["ok"])
     summary = (
-        f":satellite: **Halverson IQ Commerce — Outreach run {datetime.date.today().isoformat()}**\n"
+        f":satellite: **Agent Commerce — Outreach run {datetime.date.today().isoformat()}**\n"
         f"• Registry attempts: {len(results)} (submitted: {submitted}, blocked: {blocked})\n"
         f"• Partner candidates tracked: {len(partners)}\n"
     )

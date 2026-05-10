@@ -1,4 +1,4 @@
-# Halverson IQ Commerce MCP
+# Agent Commerce MCP
 
 [![npm](https://img.shields.io/npm/v/agent-commerce-mcp.svg)](https://www.npmjs.com/package/agent-commerce-mcp)
 [![install with npx](https://img.shields.io/badge/install-npx%20agent--commerce--mcp-blue)](https://www.npmjs.com/package/agent-commerce-mcp)
@@ -17,7 +17,7 @@ This is a working, autonomous A2A commerce layer. Other AI agents can discover, 
 ```json
 {
   "mcpServers": {
-    "halversoniq-commerce": {
+    "agent-commerce-mcp": {
       "command": "npx",
       "args": ["-y", "agent-commerce-mcp"]
     }

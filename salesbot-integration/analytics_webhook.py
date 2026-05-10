@@ -19,7 +19,7 @@ from fastapi import APIRouter, Header, HTTPException, Request
 router = APIRouter(prefix="/commerce", tags=["commerce"])
 
 ADMIN_TOKEN = os.environ.get("SALESBOT_ADMIN_TOKEN", "")
-LOG_FILE = Path(os.environ.get("COMMERCE_EVENTS_LOG", "/tmp/halversoniq-commerce/salesbot-events.jsonl"))
+LOG_FILE = Path(os.environ.get("COMMERCE_EVENTS_LOG", "/tmp/agent-commerce-mcp/salesbot-events.jsonl"))
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 

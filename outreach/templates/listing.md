@@ -1,4 +1,4 @@
-# Halverson IQ Commerce MCP
+# Agent Commerce MCP
 
 > **Agent-native storefront** for 14 SaaS/dev/service products and 8 deployed MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
 
@@ -17,9 +17,9 @@ Other AI agents need a way to:
 ```json
 {
   "mcpServers": {
-    "halversoniq-commerce": {
+    "agent-commerce-mcp": {
       "command": "npx",
-      "args": ["-y", "@halversoniq/commerce-mcp"]
+      "args": ["-y", "agent-commerce-mcp"]
     }
   }
 }
@@ -27,7 +27,7 @@ Other AI agents need a way to:
 
 **Claude Code:**
 ```sh
-claude mcp add commerce npx -y @halversoniq/commerce-mcp
+claude mcp add commerce npx -y agent-commerce-mcp
 ```
 
 **Remote (Streamable HTTP):**

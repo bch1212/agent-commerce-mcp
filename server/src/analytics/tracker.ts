@@ -26,7 +26,7 @@ export interface AnalyticsEvent {
   metadata?: Record<string, unknown>;
 }
 
-const LOG_PATH = process.env.ANALYTICS_LOG_PATH || "/tmp/halversoniq-commerce/events.jsonl";
+const LOG_PATH = process.env.ANALYTICS_LOG_PATH || "/tmp/agent-commerce-mcp/events.jsonl";
 
 function ensureDir() {
   const dir = dirname(LOG_PATH);
