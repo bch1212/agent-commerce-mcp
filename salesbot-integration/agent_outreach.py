@@ -27,7 +27,7 @@ Subject: Partnership idea — Agent Commerce + {partner_name}
 Hi {partner_name} team,
 
 I'm Brett, building Agent Commerce — an MCP server that exposes 14
-products and 8 deployed MCP servers to other AI agents. {partner_name} sits
+products and 9 deployed MCP servers to other AI agents. {partner_name} sits
 in {category} and our catalog overlaps with: {complementary}.
 
 Two ideas worth a 20-minute call:

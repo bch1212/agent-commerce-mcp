@@ -12,7 +12,7 @@ AGENT_COMMERCE_PRODUCT = {
     "name": "Agent Commerce MCP",
     "tagline": "Agent-native storefront for the entire Halverson IQ portfolio.",
     "description": (
-        "An MCP server that exposes 14 products and 8 deployed MCP servers to other AI agents — "
+        "An MCP server that exposes 14 products and 9 deployed MCP servers to other AI agents — "
         "discovery, pricing, Stripe checkout, affiliate program, AgentTrust verification. "
         "When an LLM somewhere needs prompt-injection defense, lead lists, fishing reports, or "
         "any of the rest, our catalog is one MCP call away."

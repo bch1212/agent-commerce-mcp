@@ -1,6 +1,6 @@
 # Agent Commerce MCP
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 8 deployed MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 9 deployed MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
 
 ## Why list this server
 

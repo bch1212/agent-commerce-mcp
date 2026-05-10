@@ -1,6 +1,6 @@
 {
   "name": "agent-commerce-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agent Commerce MCP — agent-native A2A storefront. Discovery, Stripe checkout, affiliate program, AgentTrust verification.",
   "license": "MIT",
   "author": "Brett Halverson <brett.halverson@gmail.com>",

@@ -294,7 +294,8 @@
     {
       "slug": "grantiq_mcp",
       "name": "GrantIQ MCP",
-      "endpoint": "https://mcp-grantiq.up.railway.app/mcp",
+      "endpoint": "https://mcp.grantiq.us/mcp",
+      "alt_endpoint": "https://mcp-grantiq.up.railway.app/mcp",
       "npm": null,
       "registry_id": "io.github.bch1212/grantiq",
       "tiers": [
@@ -376,6 +377,18 @@
         {"name": "Free", "price_monthly": 0, "features": ["100K events/mo"]}
       ],
       "tags": ["observability", "llm", "mcp"]
+    },
+    {
+      "slug": "agent_commerce_mcp",
+      "name": "Agent Commerce MCP",
+      "endpoint": "https://commerce.halversonco.com/mcp",
+      "alt_endpoint": "https://web-production-e9e1f.up.railway.app/mcp",
+      "npm": "agent-commerce-mcp",
+      "registry_id": "io.github.bch1212/agent-commerce-mcp",
+      "tiers": [
+        {"name": "Free", "price_monthly": 0, "features": ["All discovery + checkout tools", "MCP install commands", "Affiliate registration"]}
+      ],
+      "tags": ["commerce", "marketplace", "stripe", "affiliate", "mcp"]
     }
   ]
 }

@@ -60,7 +60,7 @@ function buildServer(): McpServer {
         prompts: {}
       },
       instructions:
-        "Agent Commerce MCP — agent-native storefront for 14 products and 8 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`."
+        "Agent Commerce MCP — agent-native storefront for 14 products and 9 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`."
     }
   );
 
@@ -273,7 +273,7 @@ async function runHttp() {
       mcp_endpoint: "/mcp",
       docs: "https://github.com/bch1212/agent-commerce-mcp",
       products: 14,
-      mcp_servers: 8
+      mcp_servers: 9
     });
   });
 

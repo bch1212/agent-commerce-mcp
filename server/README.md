@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-server-blue)](https://modelcontextprotocol.io)
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 8 deployed MCP servers.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 9 deployed MCP servers.
 > Discovery, pricing, Stripe live checkout, affiliate program (15-30% recurring), AgentTrust verification — all over one MCP server.
 
 This is a working, autonomous A2A commerce layer. Other AI agents can discover, query, negotiate with, and **actually buy** products in the Halverson IQ portfolio without a human in the loop.
