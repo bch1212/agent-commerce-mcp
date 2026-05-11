@@ -6,8 +6,9 @@
       "url": "https://registry.modelcontextprotocol.io",
       "submission_method": "github_workflow",
       "submission_target": ".github/workflows/publish-mcp.yml",
-      "status": "queued",
-      "expected_id": "io.github.bch1212/commerce"
+      "status": "submitted",
+      "expected_id": "io.github.bch1212/agent-commerce-mcp",
+      "last_attempt_detail": "Live: v0.1.2 isLatest=true at https://registry.modelcontextprotocol.io/v0/servers/io.github.bch1212/agent-commerce-mcp"
     },
     {
       "slug": "smithery",
@@ -15,15 +16,17 @@
       "url": "https://smithery.ai",
       "submission_method": "smithery_yaml",
       "submission_target": "smithery.yaml",
-      "status": "queued"
+      "status": "submitted",
+      "last_attempt_detail": "smithery.yaml committed to repo root; Smithery auto-builds from GitHub on next crawl"
     },
     {
       "slug": "glama",
       "name": "Glama",
       "url": "https://glama.ai/mcp/servers",
-      "submission_method": "api",
+      "submission_method": "auto_index",
       "submission_target": "https://glama.ai/api/mcp/v1/servers",
-      "status": "queued"
+      "status": "auto_pending",
+      "last_attempt_detail": "Glama POST is closed (403); their crawler auto-indexes from npm. Package live on npm 2026-05-09; expected to appear within 1-3 days"
     },
     {
       "slug": "mcp_run",
@@ -38,15 +41,18 @@
       "url": "https://www.pulsemcp.com",
       "submission_method": "form",
       "submission_target": "https://www.pulsemcp.com/submit",
-      "status": "queued"
+      "status": "blocked",
+      "last_attempt": "2026-05-11T01:38:04.392482Z",
+      "last_attempt_detail": "method 'form' requires manual submission"
     },
     {
       "slug": "mcp_so",
       "name": "mcp.so",
       "url": "https://mcp.so",
       "submission_method": "github_pr",
-      "submission_target": "https://github.com/mcp-so/mcp-so",
-      "status": "queued"
+      "submission_target": "https://github.com/chatmcp/mcpso",
+      "status": "submitted",
+      "last_attempt_detail": "https://github.com/chatmcp/mcpso/issues/2268"
     },
     {
       "slug": "mcpize",
@@ -60,21 +66,27 @@
       "name": "awesome-mcp-servers",
       "url": "https://github.com/punkpeye/awesome-mcp-servers",
       "submission_method": "github_pr",
-      "status": "queued"
+      "status": "submitted",
+      "last_attempt": "2026-05-11T01:38:05.130062Z",
+      "last_attempt_detail": "https://github.com/punkpeye/awesome-mcp-servers/issues/6180"
     },
     {
       "slug": "awesome_claude",
       "name": "awesome-claude",
       "url": "https://github.com/yzfly/awesome-claude-prompts",
       "submission_method": "github_pr",
-      "status": "queued"
+      "status": "blocked",
+      "last_attempt": "2026-05-11T01:38:05.130085Z",
+      "last_attempt_detail": "method 'github_pr' requires manual submission"
     },
     {
       "slug": "awesome_ai_agents",
       "name": "awesome-ai-agents",
       "url": "https://github.com/e2b-dev/awesome-ai-agents",
       "submission_method": "github_pr",
-      "status": "queued"
+      "status": "submitted",
+      "last_attempt": "2026-05-11T01:38:05.678279Z",
+      "last_attempt_detail": "https://github.com/e2b-dev/awesome-ai-agents/issues/930"
     },
     {
       "slug": "langchain_hub",

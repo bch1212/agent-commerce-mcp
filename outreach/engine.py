@@ -68,7 +68,7 @@ def submit_glama(listing_md: str) -> tuple[bool, str]:
         "name": "Agent Commerce",
         "id": "agent-commerce-mcp",
         "npm": "agent-commerce-mcp",
-        "description": "Agent-native storefront for 14 products and 8 MCP servers.",
+        "description": "Agent-native storefront for 14 products and 9 MCP servers.",
         "readme": listing_md,
         "tags": ["commerce", "stripe", "affiliate", "marketplace"],
     }
@@ -106,7 +106,7 @@ def open_github_pr_issue(repo: str, title: str, body: str) -> tuple[bool, str]:
             headers={
                 "Authorization": f"token {GITHUB_PAT}",
                 "Accept": "application/vnd.github+json",
-                "User-Agent": "halversoniq-outreach",
+                "User-Agent": "agent-commerce-outreach",
             },
             method="POST",
         )
@@ -138,7 +138,7 @@ def run_registry_submissions() -> list[dict]:
             )
         elif method == "github_pr" and reg["slug"] == "mcp_so":
             ok, detail = open_github_pr_issue(
-                "chatmcp/mcp-directory",
+                "chatmcp/mcpso",
                 "Add Agent Commerce MCP",
                 listing,
             )
