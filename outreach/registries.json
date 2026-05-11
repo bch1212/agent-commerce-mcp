@@ -26,24 +26,16 @@
       "submission_method": "auto_index",
       "submission_target": "https://glama.ai/api/mcp/v1/servers",
       "status": "auto_pending",
-      "last_attempt_detail": "Glama POST is closed (403); their crawler auto-indexes from npm. Package live on npm 2026-05-09; expected to appear within 1-3 days"
-    },
-    {
-      "slug": "mcp_run",
-      "name": "mcp.run",
-      "url": "https://www.mcp.run",
-      "submission_method": "github_pr",
-      "status": "discovery"
+      "last_attempt_detail": "POST is closed (403). Their crawler auto-indexes from npm; package live on npm 2026-05-09, should appear within 1-3 days"
     },
     {
       "slug": "pulsemcp",
       "name": "PulseMCP",
       "url": "https://www.pulsemcp.com",
-      "submission_method": "form",
-      "submission_target": "https://www.pulsemcp.com/submit",
-      "status": "blocked",
-      "last_attempt": "2026-05-11T01:38:04.392482Z",
-      "last_attempt_detail": "method 'form' requires manual submission"
+      "submission_method": "auto_index",
+      "submission_target": "crawls Anthropic Registry + npm + awesome-mcp-servers",
+      "status": "auto_pending",
+      "last_attempt_detail": "PulseMCP does NOT accept direct submissions — they crawl Anthropic Registry + npm + awesome-mcp. We're on all three; will surface on their next index pass (typ. 1-7 days)."
     },
     {
       "slug": "mcp_so",
@@ -55,29 +47,12 @@
       "last_attempt_detail": "https://github.com/chatmcp/mcpso/issues/2268"
     },
     {
-      "slug": "mcpize",
-      "name": "MCPize",
-      "url": "https://mcpize.com",
-      "submission_method": "form",
-      "status": "discovery"
-    },
-    {
       "slug": "awesome_mcp_servers",
       "name": "awesome-mcp-servers",
       "url": "https://github.com/punkpeye/awesome-mcp-servers",
       "submission_method": "github_pr",
       "status": "submitted",
-      "last_attempt": "2026-05-11T01:38:05.130062Z",
-      "last_attempt_detail": "https://github.com/punkpeye/awesome-mcp-servers/issues/6180"
-    },
-    {
-      "slug": "awesome_claude",
-      "name": "awesome-claude",
-      "url": "https://github.com/yzfly/awesome-claude-prompts",
-      "submission_method": "github_pr",
-      "status": "blocked",
-      "last_attempt": "2026-05-11T01:38:05.130085Z",
-      "last_attempt_detail": "method 'github_pr' requires manual submission"
+      "last_attempt_detail": "https://github.com/punkpeye/awesome-mcp-servers/issues/6180 (closed dup #6126)"
     },
     {
       "slug": "awesome_ai_agents",
@@ -85,29 +60,55 @@
       "url": "https://github.com/e2b-dev/awesome-ai-agents",
       "submission_method": "github_pr",
       "status": "submitted",
-      "last_attempt": "2026-05-11T01:38:05.678279Z",
       "last_attempt_detail": "https://github.com/e2b-dev/awesome-ai-agents/issues/930"
+    },
+    {
+      "slug": "mcp_run",
+      "name": "mcp.run (defunct → turbomcp.ai)",
+      "url": "https://turbomcp.ai",
+      "submission_method": "n/a",
+      "status": "dropped",
+      "last_attempt_detail": "Property pivoted to turbomcp.ai which is now a Framer-built product site (not a directory). No submission path. Drop from outreach."
+    },
+    {
+      "slug": "mcpize",
+      "name": "MCPize",
+      "url": "https://mcpize.com",
+      "submission_method": "form",
+      "status": "low_priority",
+      "last_attempt_detail": "Low-traffic directory; no public API. Skip unless growth-justified."
     },
     {
       "slug": "langchain_hub",
       "name": "LangChain Hub",
       "url": "https://smith.langchain.com/hub",
-      "submission_method": "manual",
-      "status": "discovery"
+      "submission_method": "n/a",
+      "status": "dropped",
+      "last_attempt_detail": "Not an MCP-server directory — for LangChain prompts/chains. Drop."
     },
     {
       "slug": "openai_gpt_store",
       "name": "OpenAI GPT Store",
       "url": "https://chat.openai.com/gpts",
-      "submission_method": "manual",
-      "status": "discovery"
+      "submission_method": "n/a",
+      "status": "dropped",
+      "last_attempt_detail": "GPT Store is for OpenAI GPTs, not MCP servers. Drop."
     },
     {
       "slug": "crewai",
-      "name": "CrewAI Marketplace",
+      "name": "CrewAI",
       "url": "https://www.crewai.io",
-      "submission_method": "manual",
-      "status": "discovery"
+      "submission_method": "n/a",
+      "status": "dropped",
+      "last_attempt_detail": "CrewAI is a multi-agent framework, not an MCP directory. Drop."
+    },
+    {
+      "slug": "awesome_claude",
+      "name": "awesome-claude",
+      "url": "https://github.com/yzfly/awesome-claude-prompts",
+      "submission_method": "n/a",
+      "status": "dropped",
+      "last_attempt_detail": "Out of scope — repo is for Claude prompts, not MCP servers. Drop."
     }
   ]
 }
