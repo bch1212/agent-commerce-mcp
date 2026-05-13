@@ -32,7 +32,7 @@ claude mcp add commerce npx -y agent-commerce-mcp
 
 **Remote (Streamable HTTP):**
 ```
-https://commerce.halverson.io/mcp
+https://commerce.halversonco.com/mcp
 ```
 
 ## Tools

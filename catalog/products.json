@@ -3,7 +3,7 @@
   "vendor": {
     "name": "Halverson IQ",
     "operator": "Brett Halverson",
-    "website": "https://halverson.io",
+    "website": "https://halversonco.com",
     "trust_mcp": "mcp-agenttrust-production.up.railway.app/mcp",
     "agenttrust_id": "halversoniq"
   },
@@ -19,8 +19,8 @@
       "icp": "Anglers 25-55, fishing guides",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "stripe_price_id": null, "features": ["3 spot reports/week", "Basic species data"]},
-        {"name": "Pro", "price_monthly": 5.99, "price_yearly": 59.99, "stripe_price_id": "price_castiq_pro_m", "features": ["Unlimited spot reports", "Hyperlocal forecasts", "Species AI"]},
-        {"name": "Guide", "price_monthly": 14.99, "price_yearly": 149.99, "stripe_price_id": "price_castiq_guide_m", "features": ["Multi-client tracking", "Priority data", "White-label reports"]}
+        {"name": "Pro", "price_monthly": 5.99, "price_yearly": 59.99, "stripe_price_id": null, "features": ["Unlimited spot reports", "Hyperlocal forecasts", "Species AI"]},
+        {"name": "Guide", "price_monthly": 14.99, "price_yearly": 149.99, "stripe_price_id": null, "features": ["Multi-client tracking", "Priority data", "White-label reports"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -38,8 +38,8 @@
       "icp": "Nonprofit EDs, grant writers, dev directors",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "stripe_price_id": null, "features": ["10 searches/mo", "Basic eligibility"]},
-        {"name": "Pro", "price_monthly": 29, "price_yearly": 290, "stripe_price_id": "price_grantiq_pro_m", "features": ["Unlimited searches", "AI drafting", "Deadline tracker"]},
-        {"name": "Team", "price_monthly": 99, "price_yearly": 990, "stripe_price_id": "price_grantiq_team_m", "features": ["5 seats", "Submission tracking", "Priority support"]}
+        {"name": "Pro", "price_monthly": 29, "price_yearly": 290, "stripe_price_id": null, "features": ["Unlimited searches", "AI drafting", "Deadline tracker"]},
+        {"name": "Team", "price_monthly": 99, "price_yearly": 990, "stripe_price_id": null, "features": ["5 seats", "Submission tracking", "Priority support"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -57,7 +57,7 @@
       "icp": "ADHD adults, productivity seekers",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["3 sessions/day"]},
-        {"name": "Pro", "price_monthly": 9.99, "price_yearly": 49.99, "stripe_price_id": "price_focusiq_pro_m", "features": ["Unlimited sessions", "Energy tracking", "Slack integration"]}
+        {"name": "Pro", "price_monthly": 9.99, "price_yearly": 49.99, "stripe_price_id": null, "features": ["Unlimited sessions", "Energy tracking", "Slack integration"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -75,8 +75,8 @@
       "icp": "Catholic faithful, daily Mass attendees",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["Daily readings", "Saint of the day"]},
-        {"name": "Plus", "price_monthly": 3.99, "stripe_price_id": "price_catholic_plus_m", "features": ["Liturgy of the hours", "Audio readings"]},
-        {"name": "Family", "price_monthly": 9.99, "stripe_price_id": "price_catholic_family_m", "features": ["6 family members", "Lectionary archive"]}
+        {"name": "Plus", "price_monthly": 3.99, "stripe_price_id": null, "features": ["Liturgy of the hours", "Audio readings"]},
+        {"name": "Family", "price_monthly": 9.99, "stripe_price_id": null, "features": ["6 family members", "Lectionary archive"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -95,7 +95,7 @@
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["500 calls/mo", "Markdown output"]},
         {"name": "Usage", "price_per_call": 0.001, "features": ["Pay-as-you-go", "$0.001/call", "No monthly minimum"]},
-        {"name": "Scale", "price_monthly": 99, "stripe_price_id": "price_agentfetch_scale_m", "features": ["100K calls included", "Priority queue"]}
+        {"name": "Scale", "price_monthly": 99, "stripe_price_id": null, "features": ["100K calls included", "Priority queue"]}
       ],
       "free_tier_command": "npx -y @agentfetch/mcp",
       "mcp_install": {
@@ -118,9 +118,9 @@
       "mcp_endpoint": "https://queryshield-api-production.up.railway.app/mcp",
       "icp": "Engineering leads and security at AI SaaS",
       "tiers": [
-        {"name": "Starter", "price_monthly": 500, "stripe_price_id": "price_queryshield_starter_m", "features": ["1M queries/mo", "Slack alerts", "5 schemas"]},
-        {"name": "Growth", "price_monthly": 1500, "stripe_price_id": "price_queryshield_growth_m", "features": ["10M queries/mo", "Custom rules", "SOC2 reports"]},
-        {"name": "Enterprise", "price_monthly": 3500, "stripe_price_id": "price_queryshield_ent_m", "features": ["Unlimited", "Dedicated tenant", "SLA"]}
+        {"name": "Starter", "price_monthly": 500, "stripe_price_id": "price_1TTOGx54riYeMScuGHg86LpL", "features": ["1M queries/mo", "Slack alerts", "5 schemas"]},
+        {"name": "Growth", "price_monthly": 1500, "stripe_price_id": "price_1TTOGz54riYeMScuxNB5eMZA", "features": ["10M queries/mo", "Custom rules", "SOC2 reports"]},
+        {"name": "Enterprise", "price_monthly": 3500, "stripe_price_id": "price_1TTOH154riYeMScueLippiRt", "features": ["Unlimited", "Dedicated tenant", "SLA"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -139,9 +139,9 @@
       "icp": "AI developers handling untrusted text",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["10K scans/mo", "Heuristic engine"]},
-        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_injectshield_pro_m", "features": ["100K scans", "Semantic engine"]},
-        {"name": "Team", "price_monthly": 99, "stripe_price_id": "price_injectshield_team_m", "features": ["1M scans", "Custom rulesets"]},
-        {"name": "Enterprise", "price_monthly": 499, "stripe_price_id": "price_injectshield_ent_m", "features": ["Unlimited", "On-prem", "SLA"]}
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_1TTYDo54riYeMScu8Repm0in", "features": ["100K scans", "Semantic engine"]},
+        {"name": "Team", "price_monthly": 99, "stripe_price_id": "price_1TTYDp54riYeMScuZlouSt4i", "features": ["1M scans", "Custom rulesets"]},
+        {"name": "Enterprise", "price_monthly": 499, "stripe_price_id": "price_1TTYDq54riYeMScuK1g8rLsh", "features": ["Unlimited", "On-prem", "SLA"]}
       ],
       "free_tier_command": "npx -y @injectshield/mcp",
       "mcp_install": {
@@ -165,9 +165,9 @@
       "icp": "AI engineers, ML platform leads",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["100K events/mo"]},
-        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_modelwatch_pro_m", "features": ["1M events", "Custom dashboards"]},
-        {"name": "Team", "price_monthly": 299, "stripe_price_id": "price_modelwatch_team_m", "features": ["10M events", "Eval suite"]},
-        {"name": "Enterprise", "price_monthly": 999, "stripe_price_id": "price_modelwatch_ent_m", "features": ["Unlimited", "VPC peering"]}
+        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_1TVCtN54riYeMScu0B93Vz3o", "features": ["1M events", "Custom dashboards"]},
+        {"name": "Team", "price_monthly": 299, "stripe_price_id": "price_1TVCtO54riYeMScucTmcEkwK", "features": ["10M events", "Eval suite"]},
+        {"name": "Enterprise", "price_monthly": 999, "stripe_price_id": "price_1TVCtO54riYeMScuPpRClR4l", "features": ["Unlimited", "VPC peering"]}
       ],
       "free_tier_command": "npx -y @modelwatch/mcp",
       "mcp_install": {
@@ -189,8 +189,8 @@
       "icp": "SMBs adopting AI tools, IT/compliance leads",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["5 tools tracked"]},
-        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_compliancebeacon_pro_m", "features": ["50 tools", "Quarterly reports"]},
-        {"name": "Team", "price_monthly": 79, "stripe_price_id": "price_compliancebeacon_team_m", "features": ["200 tools", "Audit prep"]}
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_1TRbr854riYeMScuxlN7OHbT", "features": ["50 tools", "Quarterly reports"]},
+        {"name": "Team", "price_monthly": 79, "stripe_price_id": "price_1TRbr854riYeMScutazXrcWh", "features": ["200 tools", "Audit prep"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -207,9 +207,9 @@
       "url": "https://regimpact.dev",
       "icp": "Indie AI founders, solo SaaS builders",
       "tiers": [
-        {"name": "Solo", "price_monthly": 49, "stripe_price_id": "price_regimpact_solo_m", "features": ["1 product", "EU AI Act + GDPR"]},
-        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_regimpact_pro_m", "features": ["3 products", "All regs"]},
-        {"name": "Team", "price_monthly": 199, "stripe_price_id": "price_regimpact_team_m", "features": ["10 products", "Audit-ready exports"]}
+        {"name": "Solo", "price_monthly": 49, "stripe_price_id": "price_1TTiXJ54riYeMScukLS31Q2a", "features": ["1 product", "EU AI Act + GDPR"]},
+        {"name": "Pro", "price_monthly": 99, "stripe_price_id": "price_1TTiXK54riYeMScujUt09Rwu", "features": ["3 products", "All regs"]},
+        {"name": "Team", "price_monthly": 199, "stripe_price_id": "price_1TTiXK54riYeMScu8P12Y7iz", "features": ["10 products", "Audit-ready exports"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -226,9 +226,9 @@
       "url": "https://brandedaudits.com",
       "icp": "Digital marketing agencies, freelance marketers",
       "tiers": [
-        {"name": "Starter", "price_monthly": 49, "stripe_price_id": "price_branded_starter_m", "features": ["10 audits/mo", "Logo customization"]},
-        {"name": "Pro", "price_monthly": 149, "stripe_price_id": "price_branded_pro_m", "features": ["50 audits", "Custom domain"]},
-        {"name": "Agency", "price_monthly": 299, "stripe_price_id": "price_branded_agency_m", "features": ["Unlimited", "API access"]}
+        {"name": "Starter", "price_monthly": 49, "stripe_price_id": "price_1TRsiG54riYeMScurubkYy8e", "features": ["10 audits/mo", "Logo customization"]},
+        {"name": "Pro", "price_monthly": 149, "stripe_price_id": "price_1TRsiH54riYeMScut148aRvd", "features": ["50 audits", "Custom domain"]},
+        {"name": "Agency", "price_monthly": 299, "stripe_price_id": "price_1TRsiI54riYeMScuHfckxk4m", "features": ["Unlimited", "API access"]}
       ],
       "free_tier_command": null,
       "checkout_provider": "stripe",
@@ -300,7 +300,7 @@
       "registry_id": "io.github.bch1212/grantiq",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["50 queries/day"]},
-        {"name": "Pro", "price_monthly": 19, "stripe_price_id": "price_grantiq_mcp_pro_m", "features": ["Unlimited queries", "Priority"]}
+        {"name": "Pro", "price_monthly": 19, "stripe_price_id": null, "features": ["Unlimited queries", "Priority"]}
       ],
       "tags": ["grants", "nonprofit", "mcp"]
     },
@@ -312,7 +312,7 @@
       "registry_id": "io.github.bch1212/outdooriq-mcp",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["50 queries/day"]},
-        {"name": "Pro", "price_monthly": 14, "stripe_price_id": "price_outdooriq_mcp_pro_m", "features": ["Unlimited queries"]}
+        {"name": "Pro", "price_monthly": 14, "stripe_price_id": null, "features": ["Unlimited queries"]}
       ],
       "tags": ["fishing", "outdoor", "weather", "mcp"]
     },
@@ -323,7 +323,7 @@
       "registry_id": "io.github.bch1212/bizintel",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["20 queries/day"]},
-        {"name": "Pro", "price_monthly": 19, "stripe_price_id": "price_bizintel_pro_m", "features": ["Unlimited"]}
+        {"name": "Pro", "price_monthly": 19, "stripe_price_id": null, "features": ["Unlimited"]}
       ],
       "tags": ["business", "data", "mcp"]
     },
@@ -344,7 +344,7 @@
       "registry_id": "io.github.bch1212/pubrecords",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["30 queries/day"]},
-        {"name": "Pro", "price_monthly": 29, "stripe_price_id": "price_pubrecords_pro_m", "features": ["Unlimited"]}
+        {"name": "Pro", "price_monthly": 29, "stripe_price_id": null, "features": ["Unlimited"]}
       ],
       "tags": ["public-records", "data", "mcp"]
     },
@@ -354,7 +354,7 @@
       "endpoint": "https://queryshield-api-production.up.railway.app/mcp",
       "registry_id": "io.github.bch1212/queryshield",
       "tiers": [
-        {"name": "Starter", "price_monthly": 500, "stripe_price_id": "price_queryshield_starter_m"}
+        {"name": "Starter", "price_monthly": 500, "stripe_price_id": null}
       ],
       "tags": ["security", "sql", "mcp"]
     },

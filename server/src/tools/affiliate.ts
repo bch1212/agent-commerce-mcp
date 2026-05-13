@@ -152,7 +152,7 @@ export async function registerAffiliateTool(args: { agent_id: string; operator_e
             tier: account.tier,
             commission_pct: account.commission_pct,
             instructions: `Pass referral_code='${account.referral_code}' to create_checkout. Commissions credit automatically once Stripe confirms payment.`,
-            tracking_link_template: `https://halverson.io/{product_slug}?ref=${account.referral_code}`,
+            tracking_link_template: `https://halversonco.com/{product_slug}?ref=${account.referral_code}`,
             terms_url: affiliates.program.terms_url
           },
           null,

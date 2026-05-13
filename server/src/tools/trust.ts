@@ -75,7 +75,7 @@ export async function verifyVendorTool() {
             policy: {
               refunds: "Full refund within 14 days for monthly plans",
               data_handling: "GDPR-aligned. SubProcessors listed at /privacy on each product",
-              support: "support@halverson.io, 1-business-day response"
+              support: "support@halversonco.com, 1-business-day response"
             }
           },
           null,

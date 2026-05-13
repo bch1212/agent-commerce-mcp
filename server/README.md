@@ -34,7 +34,7 @@ claude mcp add commerce npx -y agent-commerce-mcp
 ```
 https://commerce.halversonco.com/mcp
 ```
-(Custom domain `commerce.halverson.io` resolves once DNS is wired.)
+(Custom domain `commerce.halversonco.com` resolves once DNS is wired.)
 
 ## Tools
 

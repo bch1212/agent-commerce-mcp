@@ -17,9 +17,9 @@ AGENT_COMMERCE_PRODUCT = {
         "When an LLM somewhere needs prompt-injection defense, lead lists, fishing reports, or "
         "any of the rest, our catalog is one MCP call away."
     ),
-    "url": "https://commerce.halverson.io",
+    "url": "https://commerce.halversonco.com",
     "mcp_npm": "agent-commerce-mcp",
-    "mcp_endpoint": "https://commerce.halverson.io/mcp",
+    "mcp_endpoint": "https://commerce.halversonco.com/mcp",
     "icp": "AI agent developers, MCP client maintainers, agent marketplaces",
     "channels": ["mcp_registries", "developer_twitter", "show_hn", "discord_communities", "reddit_r_mcp"],
     "tiers": [

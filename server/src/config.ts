@@ -9,8 +9,8 @@ export const config = {
     secretKey: process.env.STRIPE_SECRET_KEY || process.env.STRIPE_TEST_SECRET_KEY || "",
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
     isTest: !process.env.STRIPE_SECRET_KEY && !!process.env.STRIPE_TEST_SECRET_KEY,
-    successUrl: process.env.STRIPE_SUCCESS_URL || "https://halverson.io/success?session={CHECKOUT_SESSION_ID}",
-    cancelUrl: process.env.STRIPE_CANCEL_URL || "https://halverson.io/cancel"
+    successUrl: process.env.STRIPE_SUCCESS_URL || "https://halversonco.com/success?session={CHECKOUT_SESSION_ID}",
+    cancelUrl: process.env.STRIPE_CANCEL_URL || "https://halversonco.com/cancel"
   },
   gumroad: {
     accessToken: process.env.GUMROAD_ACCESS_TOKEN || ""
@@ -27,5 +27,5 @@ export const config = {
     webhookUrl: process.env.DISCORD_WEBHOOK_URL || ""
   },
   catalogPath: process.env.CATALOG_PATH || "catalog",
-  baseUrl: process.env.BASE_URL || "https://commerce.halverson.io"
+  baseUrl: process.env.BASE_URL || "https://commerce.halversonco.com"
 };

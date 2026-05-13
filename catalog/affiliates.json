@@ -7,7 +7,7 @@
     "payout_method": "Stripe Connect or Gumroad payout",
     "minimum_payout_usd": 50,
     "tracking": "referral_code on create_checkout, persisted in Stripe metadata",
-    "terms_url": "https://halverson.io/affiliate-terms"
+    "terms_url": "https://halversonco.com/affiliate-terms"
   },
   "tiers": {
     "agent_partner": {
