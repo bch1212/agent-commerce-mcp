@@ -101,6 +101,8 @@
       "mcp_install": {
         "claude_desktop": "{\"mcpServers\": {\"agentfetch\": {\"command\": \"uvx\", \"args\": [\"--from\", \"agentfetch-mcp==1.0.1\", \"agentfetch-mcp\"]}}}",
         "cursor": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
+        "cline": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
+        "windsurf": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
         "claude_code": "claude mcp add agentfetch -- uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp"
       },
       "checkout_provider": "stripe",

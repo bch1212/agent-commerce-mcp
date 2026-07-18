@@ -19,6 +19,8 @@ test("AgentFetch catalog exposes install commands for the published PyPI package
     },
   });
   assert.equal(agentFetch.mcp_install?.cursor, UVX_COMMAND);
+  assert.equal(agentFetch.mcp_install?.cline, UVX_COMMAND);
+  assert.equal(agentFetch.mcp_install?.windsurf, UVX_COMMAND);
   assert.equal(
     agentFetch.mcp_install?.claude_code,
     "claude mcp add agentfetch -- uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
