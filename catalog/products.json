@@ -97,11 +97,13 @@
         {"name": "Usage", "price_per_call": 0.001, "features": ["Pay-as-you-go", "$0.001/call", "No monthly minimum"]},
         {"name": "Scale", "price_monthly": 99, "stripe_price_id": null, "features": ["100K calls included", "Priority queue"]}
       ],
-      "free_tier_command": "npx -y @agentfetch/mcp",
+      "free_tier_command": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
       "mcp_install": {
-        "claude_desktop": "{\"mcpServers\": {\"agentfetch\": {\"command\": \"npx\", \"args\": [\"-y\", \"@agentfetch/mcp\"]}}}",
-        "cursor": "npx -y @agentfetch/mcp",
-        "claude_code": "claude mcp add agentfetch npx -y @agentfetch/mcp"
+        "claude_desktop": "{\"mcpServers\": {\"agentfetch\": {\"command\": \"uvx\", \"args\": [\"--from\", \"agentfetch-mcp==1.0.1\", \"agentfetch-mcp\"]}}}",
+        "cursor": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
+        "cline": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
+        "windsurf": "uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp",
+        "claude_code": "claude mcp add agentfetch -- uvx --from agentfetch-mcp==1.0.1 agentfetch-mcp"
       },
       "checkout_provider": "stripe",
       "affiliate_rate": 20,
