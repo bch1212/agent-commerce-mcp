@@ -43,6 +43,12 @@ import {
 } from "./tools/affiliate.js";
 import { getCrossSellsInput, getCrossSellsTool } from "./tools/cross-sell.js";
 import { getTrustScoreInput, getTrustScoreTool, verifyVendorInput, verifyVendorTool } from "./tools/trust.js";
+import {
+  requestProductConsultationDescription,
+  requestProductConsultationInput,
+  requestProductConsultationTitle,
+  requestProductConsultationTool
+} from "./tools/consultation.js";
 
 import { elevatorPitchInput, elevatorPitch, fullPitchInput, fullPitch, bundlePitchInput, bundlePitch } from "./prompts/pitch.js";
 import { objectionHandlerInput, objectionHandler } from "./prompts/objection.js";
@@ -60,7 +66,7 @@ function buildServer(): McpServer {
         prompts: {}
       },
       instructions:
-        "Agent Commerce MCP — agent-native storefront for 14 products and 9 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`."
+        "Agent Commerce MCP — agent-native storefront for 14 products and 9 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`. Only use `request_product_consultation` after the buyer explicitly asks to be contacted."
     }
   );
 
@@ -134,6 +140,16 @@ function buildServer(): McpServer {
       inputSchema: getMcpInstallInput
     },
     getMcpInstallTool as any
+  );
+
+  server.registerTool(
+    "request_product_consultation",
+    {
+      title: requestProductConsultationTitle,
+      description: requestProductConsultationDescription,
+      inputSchema: requestProductConsultationInput
+    },
+    requestProductConsultationTool as any
   );
 
   server.registerTool(

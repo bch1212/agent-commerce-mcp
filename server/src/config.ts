@@ -21,7 +21,8 @@ export const config = {
   },
   salesbot: {
     webhookUrl: process.env.SALESBOT_WEBHOOK_URL || "",
-    adminToken: process.env.SALESBOT_ADMIN_TOKEN || ""
+    adminToken: process.env.SALESBOT_ADMIN_TOKEN || "",
+    leadCaptureUrl: process.env.SALESBOT_LEAD_CAPTURE_URL || ""
   },
   discord: {
     webhookUrl: process.env.DISCORD_WEBHOOK_URL || ""
