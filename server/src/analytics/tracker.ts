@@ -13,6 +13,7 @@ export type Action =
   | "affiliate"
   | "trust"
   | "cross_sell"
+  | "consultation"
   | "prompt"
   | "resource";
 

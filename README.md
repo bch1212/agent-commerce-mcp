@@ -36,6 +36,10 @@ https://commerce.halversonco.com/mcp
 ```
 (Custom domain `commerce.halversonco.com` resolves once DNS is wired.)
 
+## Configuration
+
+Set `SALESBOT_LEAD_CAPTURE_URL` to the Salesbot `POST /leads/capture` URL to enable opt-in consultation capture. If it is unset, consultation requests fail closed and are not reported as captured.
+
 ## Tools
 
 **Discovery**
@@ -48,6 +52,9 @@ https://commerce.halversonco.com/mcp
 - `create_checkout(product_slug, tier, email, referral_code?)` — **live Stripe URL**
 - `get_free_tier(product_slug)` — instant access (signup URL or install command)
 - `get_mcp_install(product_slug, client)` — exact install snippet for claude_desktop / claude_code / cursor / cline / windsurf
+
+**Buyer consultation (explicit opt-in only)**
+- `request_product_consultation(product_slug, email, name?)` — request contact about AgentFetch, QueryShield, or Agent Commerce; call only after the buyer explicitly asks to be contacted
 
 **Affiliate**
 - `get_affiliate_info(product_slug?)` — commission rates and tiers
