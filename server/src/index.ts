@@ -328,10 +328,13 @@ async function runHttp() {
     void entry.transport.close().catch(() => undefined);
   };
 
-  const pruneSessions = (now = Date.now()) => {
+  const pruneExpiredSessions = (now = Date.now()) => {
     for (const [id, entry] of transports) {
       if (now - entry.lastSeen >= config.security.sessionTtlMs) discardSession(id, entry);
     }
+  };
+
+  const makeRoomForNewSession = () => {
     while (transports.size >= config.security.sessionMax) {
       let oldest: [string, SessionEntry] | undefined;
       for (const candidate of transports) {
@@ -344,7 +347,7 @@ async function runHttp() {
 
   const handleMcp = async (req: Request, res: Response) => {
     if (rejectUnauthorizedStatefulToolCalls(req, res)) return;
-    pruneSessions();
+    pruneExpiredSessions();
 
     const sessionId = (req.headers["mcp-session-id"] as string) || undefined;
     const entry = sessionId ? transports.get(sessionId) : undefined;
@@ -360,7 +363,10 @@ async function runHttp() {
       transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: () => randomUUID(),
         onsessioninitialized: (id) => {
-          pruneSessions();
+          // Enforce capacity only when admitting a new session. Existing
+          // sessions must remain usable when the registry is exactly full.
+          pruneExpiredSessions();
+          makeRoomForNewSession();
           transports.set(id, { transport: transport!, lastSeen: Date.now() });
         }
       });
