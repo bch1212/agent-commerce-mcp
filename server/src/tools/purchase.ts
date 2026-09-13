@@ -82,12 +82,33 @@ export async function createCheckoutTool(args: {
   }
 
   let result;
-  if (p.checkout_provider === "gumroad") {
-    result = await createGumroadCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
-  } else if (p.checkout_provider === "lemon") {
-    result = await createLemonCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
-  } else {
-    result = await createStripeCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
+  try {
+    if (p.checkout_provider === "gumroad") {
+      result = await createGumroadCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
+    } else if (p.checkout_provider === "lemon") {
+      result = await createLemonCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
+    } else {
+      result = await createStripeCheckout({ product: p, tier, email: args.email, referral_code: args.referral_code });
+    }
+  } catch {
+    track({
+      tool: "create_checkout",
+      action: "checkout",
+      product_slug: args.product_slug,
+      metadata: { tier: args.tier, provider: p.checkout_provider, failed: true }
+    });
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify({
+            ok: false,
+            error: "Checkout creation failed. No checkout session was created; retry later."
+          })
+        }
+      ]
+    };
   }
 
   track({

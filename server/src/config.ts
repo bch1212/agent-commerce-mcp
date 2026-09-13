@@ -7,7 +7,7 @@ function positiveInt(value: string | undefined, fallback: number): number {
 
 export const config = {
   serverName: process.env.MCP_SERVER_NAME || "agent-commerce-mcp",
-  serverVersion: "0.1.0",
+  serverVersion: "0.1.3",
   port: positiveInt(process.env.PORT || process.env.MCP_SERVER_PORT, 3100),
   transport: (process.env.MCP_TRANSPORT || "auto") as "stdio" | "http" | "auto",
   security: {
