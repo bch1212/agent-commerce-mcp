@@ -20,14 +20,22 @@ export interface CheckoutResult {
   metadata: Record<string, string>;
 }
 
+interface StripeCheckoutClient {
+  checkout: {
+    sessions: {
+      create(params: Stripe.Checkout.SessionCreateParams): Promise<{ url: string | null; id: string }>;
+    };
+  };
+}
+
 export async function createStripeCheckout(opts: {
   product: CheckoutProduct;
   tier: ProductTier;
   email: string;
   referral_code?: string;
-}): Promise<CheckoutResult> {
+}, clientOverride?: StripeCheckoutClient): Promise<CheckoutResult> {
   const { product, tier, email, referral_code } = opts;
-  const c = client();
+  const c = clientOverride ?? client();
   const metadata: Record<string, string> = {
     product_slug: product.slug,
     tier: tier.name,
@@ -82,17 +90,7 @@ export async function createStripeCheckout(opts: {
       test_mode: config.stripe.isTest,
       metadata
     };
-  } catch (err: any) {
-    // Stripe price IDs in catalog are placeholders — most won't exist yet.
-    // Fall back to inline price_data via product page.
-    if (err && err.code === "resource_missing" && tier.stripe_price_id) {
-      return createStripeCheckout({
-        product,
-        tier: { ...tier, stripe_price_id: undefined },
-        email,
-        referral_code
-      });
-    }
+  } catch {
     throw new Error("Stripe checkout creation failed");
   }
 }

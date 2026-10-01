@@ -45,6 +45,13 @@ export interface ProductTier {
   features: string[];
 }
 
+export interface McpCredentialRequirement {
+  location: "header" | "env";
+  name: string;
+  required: true;
+  placeholder: string;
+}
+
 export type CheckoutProvider = "stripe" | "gumroad" | "lemon";
 
 export interface CheckoutProduct {
@@ -66,6 +73,7 @@ export interface Product extends CheckoutProduct {
   mcp_install?: Record<string, string>;
   mcp_install_npm?: string;
   mcp_endpoint?: string;
+  mcp_credentials?: McpCredentialRequirement[];
   tags: string[];
 }
 
@@ -83,6 +91,7 @@ export interface McpServerEntry extends CheckoutProduct {
   registry_id: string;
   repository: string;
   docs: string;
+  credentials?: McpCredentialRequirement[];
   purchase?: McpPurchaseMapping;
   tiers: ProductTier[];
   tags: string[];
@@ -184,7 +193,11 @@ export function searchProducts(opts: {
         score += 3;
         reasons.push(`use case match "${opts.use_case}"`);
       }
-      if (opts.category && "category" in p && p.category === opts.category) {
+      if (opts.category) {
+        const matchesCategory = opts.category === "mcp"
+          ? !("category" in p)
+          : "category" in p && p.category === opts.category;
+        if (!matchesCategory) return { product: p, score: -1, reason: "category mismatch" };
         score += 4;
         reasons.push(`category match "${opts.category}"`);
       }

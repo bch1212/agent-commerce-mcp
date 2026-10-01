@@ -2,6 +2,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { catalog } from "../src/catalog.js";
+import { searchProductsTool } from "../src/tools/discovery.js";
+import { getFreeTierTool, getMcpInstallTool } from "../src/tools/purchase.js";
+
+function payload(result: { content: Array<{ text: string }> }) {
+  return JSON.parse(result.content[0].text);
+}
 
 const expectedMcps = [
   {
@@ -179,4 +185,94 @@ test("AgentVault advertises only its working stdio package", () => {
   assert.equal(vault.install_command, "npx -y agentvault-mcp");
   assert.equal(vault.endpoint, undefined);
   assert.equal(vault.alt_endpoint, undefined);
+});
+
+test("catalog models every known required MCP credential", () => {
+  const expected = new Map([
+    ["grantiq_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
+    ["outdooriq_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
+    ["bizintel_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
+    ["pubrecords_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
+    ["injectshield_mcp", ["env", "INJECTSHIELD_API_KEY", "<YOUR_INJECTSHIELD_API_KEY>"]],
+    ["modelwatch_mcp", ["env", "MODELWATCH_API_KEY", "<YOUR_MODELWATCH_API_KEY>"]],
+  ] as const);
+
+  for (const [slug, [location, name, placeholder]] of expected) {
+    const mcp = catalog.mcp_servers.find((entry) => entry.slug === slug);
+    assert.ok(mcp, `${slug} must exist`);
+    assert.deepEqual(mcp.credentials, [
+      {
+        location,
+        name,
+        required: true,
+        placeholder,
+      },
+    ]);
+  }
+});
+
+test("free-tier and install outputs include usable remote header placeholders", async () => {
+  const free = payload(await getFreeTierTool({ product_slug: "grantiq_mcp" }));
+  assert.deepEqual(free.credential_requirements, [
+    {
+      location: "header",
+      name: "X-API-Key",
+      required: true,
+      placeholder: "<YOUR_X_API_KEY>",
+    },
+  ]);
+
+  const desktop = payload(await getMcpInstallTool({ product_slug: "grantiq_mcp", client: "claude_desktop" }));
+  assert.deepEqual(JSON.parse(desktop.install_command), {
+    mcpServers: {
+      grantiq_mcp: {
+        url: "https://mcp.grantiq.us/mcp/",
+        transport: "http",
+        headers: { "X-API-Key": "<YOUR_X_API_KEY>" },
+      },
+    },
+  });
+  assert.deepEqual(desktop.credential_requirements, free.credential_requirements);
+
+  const code = payload(await getMcpInstallTool({ product_slug: "grantiq_mcp", client: "claude_code" }));
+  assert.equal(
+    code.install_command,
+    'claude mcp add --transport http grantiq_mcp https://mcp.grantiq.us/mcp/ --header "X-API-Key: <YOUR_X_API_KEY>"',
+  );
+});
+
+test("stdio install outputs include required API-key environment placeholders", async () => {
+  const injectDesktop = payload(
+    await getMcpInstallTool({ product_slug: "injectshield_mcp", client: "claude_desktop" }),
+  );
+  assert.equal(
+    JSON.parse(injectDesktop.install_command).mcpServers.injectshield_mcp.env.INJECTSHIELD_API_KEY,
+    "<YOUR_INJECTSHIELD_API_KEY>",
+  );
+
+  const modelWatchCode = payload(
+    await getMcpInstallTool({ product_slug: "modelwatch_mcp", client: "claude_code" }),
+  );
+  assert.equal(
+    modelWatchCode.install_command,
+    "claude mcp add modelwatch_mcp --env MODELWATCH_API_KEY=<YOUR_MODELWATCH_API_KEY> -- npx -y modelwatch-mcp",
+  );
+  assert.deepEqual(modelWatchCode.credential_requirements, [
+    {
+      location: "env",
+      name: "MODELWATCH_API_KEY",
+      required: true,
+      placeholder: "<YOUR_MODELWATCH_API_KEY>",
+    },
+  ]);
+});
+
+test("category=mcp discovery returns the complete 11-server portfolio", async () => {
+  const body = payload(await searchProductsTool({ query: "mcp", category: "mcp" }));
+  assert.equal(body.count, 11);
+  assert.deepEqual(
+    new Set(body.results.map((result: { slug: string }) => result.slug)),
+    new Set(catalog.mcp_servers.map((entry) => entry.slug)),
+  );
+  assert.ok(body.results.every((result: { category: string }) => result.category === "mcp"));
 });

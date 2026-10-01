@@ -2,6 +2,7 @@
 import { z } from "zod";
 import {
   getProduct,
+  type McpCredentialRequirement,
   type McpServerEntry,
   type Product,
   type ProductTier
@@ -43,18 +44,59 @@ function hasDirectCheckoutPrice(tier: ProductTier): boolean {
   );
 }
 
+function credentialRequirements(entry: Product | McpServerEntry): McpCredentialRequirement[] {
+  return isProduct(entry) ? entry.mcp_credentials ?? [] : entry.credentials ?? [];
+}
+
+function supportAction(entry: McpServerEntry) {
+  return {
+    type: "contact_support",
+    url: `${entry.repository}/issues/new`,
+    instructions: "Contact support to arrange activation before making any payment."
+  };
+}
+
+function unavailableMcpPurchase(
+  entry: McpServerEntry,
+  tier: ProductTier,
+  status: "activation_required" | "purchase_unavailable",
+  error: string
+) {
+  return {
+    isError: true,
+    content: [
+      {
+        type: "text" as const,
+        text: JSON.stringify({
+          ok: false,
+          status,
+          product: { slug: entry.slug, name: entry.name },
+          tier: tier.name,
+          checkout_required: false,
+          purchase_available: false,
+          error,
+          action: supportAction(entry)
+        })
+      }
+    ]
+  };
+}
+
 function freeAccess(entry: Product | McpServerEntry) {
+  const credentials = credentialRequirements(entry);
   if (isProduct(entry)) {
     return {
       install_command: entry.free_tier_command ?? null,
       endpoint: entry.mcp_endpoint ?? null,
-      docs: entry.url
+      docs: entry.url,
+      ...(credentials.length ? { credential_requirements: credentials } : {})
     };
   }
   return {
     install_command: entry.install_command ?? (entry.npm ? `npx -y ${entry.npm}` : null),
     endpoint: entry.endpoint ?? null,
-    docs: entry.docs
+    docs: entry.docs,
+    ...(credentials.length ? { credential_requirements: credentials } : {})
   };
 }
 
@@ -162,45 +204,59 @@ export async function createCheckoutTool(args: {
     };
   }
 
+  if (!isProduct(requestedProduct) && !requestedProduct.purchase) {
+    return unavailableMcpPurchase(
+      requestedProduct,
+      tier,
+      "activation_required",
+      "Paid checkout is unavailable because automatic entitlement provisioning is not configured for this MCP server."
+    );
+  }
+
   let checkoutProduct: Product | McpServerEntry = requestedProduct;
   let checkoutTier = tier;
   if (!isProduct(requestedProduct) && requestedProduct.purchase) {
     const mappedProduct = getProduct(requestedProduct.purchase.product_slug);
     if (!mappedProduct || !isProduct(mappedProduct)) {
-      return {
-        isError: true,
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify({
-              ok: false,
-              error: "Checkout is not available because the catalog purchase mapping is invalid."
-            })
-          }
-        ]
-      };
+      return unavailableMcpPurchase(
+        requestedProduct,
+        tier,
+        "purchase_unavailable",
+        "Checkout is unavailable because the catalog purchase mapping is invalid."
+      );
     }
     const mappedTierName = requestedProduct.purchase.tier_map?.[tier.name] ?? tier.name;
     const mappedTier = mappedProduct.tiers.find((candidate) => candidate.name.toLowerCase() === mappedTierName.toLowerCase());
     if (!mappedTier) {
-      return {
-        isError: true,
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify({
-              ok: false,
-              error: "Checkout is not available because the catalog tier mapping is invalid."
-            })
-          }
-        ]
-      };
+      return unavailableMcpPurchase(
+        requestedProduct,
+        tier,
+        "purchase_unavailable",
+        "Checkout is unavailable because the catalog tier mapping is invalid."
+      );
     }
     checkoutProduct = mappedProduct;
     checkoutTier = mappedTier;
+
+    if (mappedProduct.checkout_provider === "stripe" && !mappedTier.stripe_price_id) {
+      return unavailableMcpPurchase(
+        requestedProduct,
+        tier,
+        "purchase_unavailable",
+        "Paid checkout is unavailable because the mapped product tier does not have a configured Stripe price."
+      );
+    }
   }
 
   if (!hasDirectCheckoutPrice(checkoutTier)) {
+    if (!isProduct(requestedProduct)) {
+      return unavailableMcpPurchase(
+        requestedProduct,
+        tier,
+        "purchase_unavailable",
+        "This MCP tier does not have a supported direct checkout path."
+      );
+    }
     return {
       isError: true,
       content: [
@@ -210,7 +266,7 @@ export async function createCheckoutTool(args: {
             ok: false,
             error: "This tier does not support direct checkout.",
             next_step: "Use the product documentation for usage-based billing or contact the vendor for activation.",
-            docs: isProduct(requestedProduct) ? requestedProduct.url : requestedProduct.docs
+            docs: requestedProduct.url
           })
         }
       ]
@@ -250,6 +306,14 @@ export async function createCheckoutTool(args: {
       product_slug: args.product_slug,
       metadata: { tier: args.tier, provider: checkoutProvider, failed: true }
     });
+    if (!isProduct(requestedProduct)) {
+      return unavailableMcpPurchase(
+        requestedProduct,
+        tier,
+        "purchase_unavailable",
+        "Checkout is currently unavailable. No checkout session was created."
+      );
+    }
     return {
       isError: true,
       content: [
@@ -295,12 +359,14 @@ export async function createCheckoutTool(args: {
                     "Payment records the purchase, but this service does not automatically provision product access. Complete the product's documented activation or support process after payment."
                 }
               : {
-                  automatic_api_key_provisioning: false,
-                  requirements:
-                    "Payment records the purchase, but this service does not automatically issue or deliver MCP API keys. Complete the product's documented activation or support process after payment."
+                  automatic_entitlement_provisioning: true,
+                  via_product_slug: checkoutProduct.slug,
+                  requirements: `Access is provisioned through ${checkoutProduct.name}'s existing product checkout and entitlement flow.`
                 },
             next_step:
-              "Direct the buyer to checkout_url to complete checkout. After payment, follow the fulfillment requirements to activate access.",
+              isProduct(requestedProduct)
+                ? "Direct the buyer to checkout_url to complete checkout. After payment, follow the fulfillment requirements to activate access."
+                : "Direct the buyer to checkout_url to complete checkout through the existing product entitlement flow.",
             referral_code: args.referral_code
           },
           null,
@@ -326,6 +392,7 @@ export async function getFreeTierTool(args: { product_slug: string }) {
   track({ tool: "get_free_tier", action: "install", product_slug: args.product_slug });
   const free = p.tiers.find(isFreeTier);
   const access = freeAccess(p);
+  const credentials = credentialRequirements(p);
 
   if (!free) {
     return {
@@ -354,6 +421,7 @@ export async function getFreeTierTool(args: { product_slug: string }) {
             free_tier: free,
             free_install_command: access.install_command,
             visit: access.endpoint ?? access.docs,
+            credential_requirements: credentials,
             instructions: access.install_command
               ? `Run: ${access.install_command}`
               : access.endpoint
@@ -388,26 +456,54 @@ export async function getMcpInstallTool(args: { product_slug: string; client: st
   const directInstall = productEntry ? null : p.install_command ?? null;
   const npmPkg = productEntry ? p.mcp_install_npm : p.npm ?? null;
   const endpoint = productEntry ? p.mcp_endpoint : p.endpoint ?? null;
+  const credentials = credentialRequirements(p);
+  const env = Object.fromEntries(
+    credentials
+      .filter((credential) => credential.location === "env")
+      .map((credential) => [credential.name, credential.placeholder])
+  );
+  const headers = Object.fromEntries(
+    credentials
+      .filter((credential) => credential.location === "header")
+      .map((credential) => [credential.name, credential.placeholder])
+  );
+  const stdioCommand = directInstall ?? (npmPkg ? `npx -y ${npmPkg}` : null);
 
-  let cmd: string | null = productInstall?.[args.client] || null;
-  if (!cmd && directInstall) {
-    cmd = directInstall;
-  }
-  if (!cmd && npmPkg) {
-    if (args.client === "claude_desktop") {
-      cmd = JSON.stringify({ mcpServers: { [p.slug]: { command: "npx", args: ["-y", npmPkg] } } }, null, 2);
-    } else if (args.client === "claude_code") {
-      cmd = `claude mcp add ${p.slug} npx -y ${npmPkg}`;
-    } else {
-      cmd = `npx -y ${npmPkg}`;
-    }
-  }
-  if (!cmd && endpoint) {
-    if (args.client === "claude_desktop") {
-      cmd = JSON.stringify({ mcpServers: { [p.slug]: { url: endpoint, transport: "http" } } }, null, 2);
-    } else {
-      cmd = `Add ${endpoint} as a remote MCP server in your client.`;
-    }
+  let cmd: string | null = null;
+  if (args.client === "claude_desktop" && endpoint) {
+    cmd = JSON.stringify({
+      mcpServers: {
+        [p.slug]: {
+          url: endpoint,
+          transport: "http",
+          ...(Object.keys(headers).length ? { headers } : {})
+        }
+      }
+    }, null, 2);
+  } else if (args.client === "claude_desktop" && stdioCommand) {
+    const [command, ...commandArgs] = stdioCommand.split(/\s+/);
+    cmd = JSON.stringify({
+      mcpServers: {
+        [p.slug]: {
+          command,
+          args: commandArgs,
+          ...(Object.keys(env).length ? { env } : {})
+        }
+      }
+    }, null, 2);
+  } else if (args.client === "claude_code" && endpoint) {
+    const headerArgs = Object.entries(headers)
+      .map(([name, value]) => ` --header "${name}: ${value}"`)
+      .join("");
+    cmd = `claude mcp add --transport http ${p.slug} ${endpoint}${headerArgs}`;
+  } else if (args.client === "claude_code" && stdioCommand) {
+    const envArgs = Object.entries(env)
+      .map(([name, value]) => ` --env ${name}=${value}`)
+      .join("");
+    cmd = `claude mcp add ${p.slug}${envArgs} -- ${stdioCommand}`;
+  } else {
+    cmd = productInstall?.[args.client] || directInstall || (npmPkg ? `npx -y ${npmPkg}` : null);
+    if (!cmd && endpoint) cmd = `Add ${endpoint} as a remote MCP server in your client.`;
   }
 
   return {
@@ -421,6 +517,7 @@ export async function getMcpInstallTool(args: { product_slug: string; client: st
             install_command: cmd || "No install command available — please reach out for support",
             npm_package: npmPkg,
             endpoint,
+            credential_requirements: credentials,
             docs: productEntry ? p.url : p.docs
           },
           null,

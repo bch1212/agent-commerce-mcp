@@ -68,7 +68,7 @@ def submit_glama(listing_md: str) -> tuple[bool, str]:
         "name": "Agent Commerce",
         "id": "agent-commerce-mcp",
         "npm": "agent-commerce-mcp",
-        "description": "Agent-native storefront for 14 products and 9 MCP servers.",
+        "description": "Agent-native storefront for 14 products and 11 MCP servers.",
         "readme": listing_md,
         "tags": ["commerce", "stripe", "affiliate", "marketplace"],
     }

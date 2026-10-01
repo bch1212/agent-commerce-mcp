@@ -138,6 +138,9 @@
       "domain": "injectshield.dev",
       "url": "https://injectshield.dev",
       "mcp_install_npm": "@injectshield/mcp",
+      "mcp_credentials": [
+        {"location": "env", "name": "INJECTSHIELD_API_KEY", "required": true, "placeholder": "<YOUR_INJECTSHIELD_API_KEY>"}
+      ],
       "icp": "AI developers handling untrusted text",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["10K scans/mo", "Heuristic engine"]},
@@ -164,6 +167,9 @@
       "domain": "modelwatch.app",
       "url": "https://modelwatch.app",
       "mcp_install_npm": "modelwatch-mcp",
+      "mcp_credentials": [
+        {"location": "env", "name": "MODELWATCH_API_KEY", "required": true, "placeholder": "<YOUR_MODELWATCH_API_KEY>"}
+      ],
       "icp": "AI engineers, ML platform leads",
       "tiers": [
         {"name": "Free", "price_monthly": 0, "features": ["100K events/mo"]},
@@ -321,6 +327,9 @@
       "registry_id": "io.github.bch1212/mcp-grantiq",
       "repository": "https://github.com/bch1212/mcp-grantiq",
       "docs": "https://github.com/bch1212/mcp-grantiq#readme",
+      "credentials": [
+        {"location": "header", "name": "X-API-Key", "required": true, "placeholder": "<YOUR_X_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 25,
       "tiers": [
@@ -338,6 +347,9 @@
       "registry_id": "io.github.bch1212/outdooriq-mcp",
       "repository": "https://github.com/bch1212/outdooriq-mcp",
       "docs": "https://github.com/bch1212/outdooriq-mcp#readme",
+      "credentials": [
+        {"location": "header", "name": "X-API-Key", "required": true, "placeholder": "<YOUR_X_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 20,
       "tiers": [
@@ -355,6 +367,9 @@
       "registry_id": "io.github.bch1212/bizintel",
       "repository": "https://github.com/bch1212/mcp-bizintel",
       "docs": "https://github.com/bch1212/mcp-bizintel#readme",
+      "credentials": [
+        {"location": "header", "name": "X-API-Key", "required": true, "placeholder": "<YOUR_X_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 20,
       "tiers": [
@@ -388,6 +403,9 @@
       "registry_id": "io.github.bch1212/pubrecords",
       "repository": "https://github.com/bch1212/mcp-pubrecords",
       "docs": "https://github.com/bch1212/mcp-pubrecords#readme",
+      "credentials": [
+        {"location": "header", "name": "X-API-Key", "required": true, "placeholder": "<YOUR_X_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 20,
       "tiers": [
@@ -426,6 +444,9 @@
       "registry_id": "io.github.bch1212/injectshield",
       "repository": "https://github.com/bch1212/injectshield",
       "docs": "https://github.com/bch1212/injectshield#readme",
+      "credentials": [
+        {"location": "env", "name": "INJECTSHIELD_API_KEY", "required": true, "placeholder": "<YOUR_INJECTSHIELD_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 25,
       "purchase": {"product_slug": "injectshield"},
@@ -447,6 +468,9 @@
       "registry_id": "io.github.bch1212/modelwatch",
       "repository": "https://github.com/bch1212/modelwatch",
       "docs": "https://github.com/bch1212/modelwatch#readme",
+      "credentials": [
+        {"location": "env", "name": "MODELWATCH_API_KEY", "required": true, "placeholder": "<YOUR_MODELWATCH_API_KEY>"}
+      ],
       "checkout_provider": "stripe",
       "affiliate_rate": 20,
       "purchase": {"product_slug": "modelwatch"},
