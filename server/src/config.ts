@@ -31,7 +31,7 @@ export const config = {
     accessToken: process.env.GUMROAD_ACCESS_TOKEN || ""
   },
   agentTrust: {
-    endpoint: process.env.AGENTTRUST_MCP_ENDPOINT || "https://mcp-agenttrust-production.up.railway.app/mcp",
+    endpoint: process.env.AGENTTRUST_MCP_ENDPOINT || "https://agenttrust-mcp-production.up.railway.app/mcp",
     vendorId: process.env.AGENTTRUST_VENDOR_ID || "halversoniq"
   },
   salesbot: {

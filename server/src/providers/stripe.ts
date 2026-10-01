@@ -2,7 +2,7 @@
 // closed when Stripe is unavailable; read-only catalog discovery still works.
 import Stripe from "stripe";
 import { config } from "../config.js";
-import type { Product, ProductTier } from "../catalog.js";
+import type { CheckoutProduct, ProductTier } from "../catalog.js";
 
 let _stripe: Stripe | null = null;
 function client(): Stripe | null {
@@ -21,7 +21,7 @@ export interface CheckoutResult {
 }
 
 export async function createStripeCheckout(opts: {
-  product: Product;
+  product: CheckoutProduct;
   tier: ProductTier;
   email: string;
   referral_code?: string;

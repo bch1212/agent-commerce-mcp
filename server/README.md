@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-server-blue)](https://modelcontextprotocol.io)
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 9 deployed MCP servers.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 11 MCP servers.
 > Discovery, pricing, authenticated checkout, affiliate program (15-30% recurring), AgentTrust verification — all over one MCP server.
 
 This is a working A2A commerce layer. Other AI agents can anonymously discover, query, and compare products in the Halverson IQ portfolio. Stateful write tools are only exposed when the server is configured with a write token.
@@ -81,7 +81,7 @@ commerce://affiliate/program
 **SaaS:** CastIQ · GrantIQ · FocusIQ · Catholic Daily
 **Developer:** AgentFetch · QueryShield · InjectShield · ModelWatch · ComplianceBeacon · RegImpact
 **Services:** Branded Audits · LeadVault · JobAuditor · Halverson IQ Digital Library
-**MCP Servers:** GrantIQ · OutdoorIQ · BizIntel · AgentTrust · PubRecords · QueryShield · InjectShield · ModelWatch
+**MCP Servers:** AgentFetch · GrantIQ · OutdoorIQ · BizIntel · AgentTrust · PubRecords · QueryShield · InjectShield · ModelWatch · Agent Commerce · AgentVault
 
 **Bundles:** AI Security Stack (20% off) · Agency Growth Kit (15% off) · AI Builder Essentials (15% off)
 

@@ -1,6 +1,6 @@
 # Agent Commerce MCP
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 9 deployed MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 11 MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
 
 ## Why list this server
 
@@ -56,7 +56,7 @@ trust: `get_trust_score`, `verify_vendor`
 **SaaS:** CastIQ, GrantIQ, FocusIQ, Catholic Daily  
 **Developer:** AgentFetch, QueryShield, InjectShield, ModelWatch, ComplianceBeacon, RegImpact  
 **Services:** Branded Audits, LeadVault, JobAuditor, Halverson IQ Digital Library  
-**MCP servers:** GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch  
+**MCP servers:** AgentFetch, GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault
 
 ## License
 

@@ -7,15 +7,17 @@ import { config } from "./config.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function locateCatalog(): string {
-  // Try several candidate locations so the server works whether run from
-  // dist/, src/, an installed npm package, or with a custom CATALOG_PATH.
+  // Prefer the repository source while developing so a stale copied runtime
+  // catalog cannot mask edits. Installed packages fall back to their bundled
+  // catalog, and an explicit CATALOG_PATH always wins.
   const candidates = [
-    config.catalogPath,
-    join(process.cwd(), config.catalogPath),
-    join(process.cwd(), "catalog"),
+    ...(process.env.CATALOG_PATH
+      ? [config.catalogPath, join(process.cwd(), config.catalogPath)]
+      : []),
     join(__dirname, "..", "..", "catalog"),
-    join(__dirname, "..", "..", "..", "catalog"),
-    join(__dirname, "..", "catalog")
+    join(__dirname, "..", "catalog"),
+    join(process.cwd(), "catalog"),
+    join(__dirname, "..", "..", "..", "catalog")
   ];
   for (const c of candidates) {
     const p = resolve(c, "products.json");
@@ -43,11 +45,18 @@ export interface ProductTier {
   features: string[];
 }
 
-export interface Product {
+export type CheckoutProvider = "stripe" | "gumroad" | "lemon";
+
+export interface CheckoutProduct {
   slug: string;
   name: string;
-  category: "saas" | "developer" | "service";
   tagline: string;
+  checkout_provider: CheckoutProvider;
+  affiliate_rate: number;
+}
+
+export interface Product extends CheckoutProduct {
+  category: "saas" | "developer" | "service";
   description: string;
   domain: string;
   url: string;
@@ -57,18 +66,24 @@ export interface Product {
   mcp_install?: Record<string, string>;
   mcp_install_npm?: string;
   mcp_endpoint?: string;
-  checkout_provider: "stripe" | "gumroad" | "lemon";
-  affiliate_rate: number;
   tags: string[];
 }
 
-export interface McpServerEntry {
-  slug: string;
-  name: string;
+export interface McpPurchaseMapping {
+  product_slug: string;
+  tier_map?: Record<string, string>;
+}
+
+export interface McpServerEntry extends CheckoutProduct {
+  description: string;
   endpoint?: string;
   alt_endpoint?: string;
   npm?: string;
+  install_command?: string;
   registry_id: string;
+  repository: string;
+  docs: string;
+  purchase?: McpPurchaseMapping;
   tiers: ProductTier[];
   tags: string[];
 }

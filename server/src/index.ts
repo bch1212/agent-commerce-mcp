@@ -76,8 +76,8 @@ function buildServer(localWriteAuthorized = false): McpServer {
       },
       instructions:
         writeToolsEnabled
-          ? "Agent Commerce MCP — agent-native storefront for 14 products and 9 deployed MCP servers. Anonymous clients can discover products with `search_products` or `get_recommendation` and see pricing with `get_pricing`. Stateful tools (`create_checkout`, `register_affiliate`, `request_partnership`, `request_product_consultation`) require either `Authorization: Bearer <token>` or `X-Agent-Commerce-API-Key: <token>`. Only use `request_product_consultation` after the buyer explicitly asks to be contacted."
-          : "Agent Commerce MCP — read-only agent-native storefront for 14 products and 9 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, fetch free-tier access, and verify vendor trust. Stateful commerce tools are disabled because no write credential is configured."
+          ? "Agent Commerce MCP — agent-native storefront for 14 products and 11 MCP servers. Anonymous clients can discover products with `search_products` or `get_recommendation` and see pricing with `get_pricing`. Stateful tools (`create_checkout`, `register_affiliate`, `request_partnership`, `request_product_consultation`) require either `Authorization: Bearer <token>` or `X-Agent-Commerce-API-Key: <token>`. Only use `request_product_consultation` after the buyer explicitly asks to be contacted."
+          : "Agent Commerce MCP — read-only agent-native storefront for 14 products and 11 MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, fetch free-tier access, and verify vendor trust. Stateful commerce tools are disabled because no write credential is configured."
     }
   );
 
