@@ -13,7 +13,16 @@ import { z } from "zod";
 import { randomUUID } from "node:crypto";
 
 import { config } from "./config.js";
+import { serviceDescriptor } from "./service-descriptor.js";
 import { listResources, readResource } from "./resources/catalog.js";
+import {
+  guardedWriteTool,
+  hasWriteCredential,
+  rateLimitMiddleware,
+  rejectUnauthorizedStatefulToolCalls,
+  requestHasWriteAuth,
+  runWithWriteAuth
+} from "./security.js";
 
 import {
   searchProductsInput,
@@ -53,7 +62,8 @@ import {
 import { elevatorPitchInput, elevatorPitch, fullPitchInput, fullPitch, bundlePitchInput, bundlePitch } from "./prompts/pitch.js";
 import { objectionHandlerInput, objectionHandler } from "./prompts/objection.js";
 
-function buildServer(): McpServer {
+function buildServer(localWriteAuthorized = false): McpServer {
+  const writeToolsEnabled = hasWriteCredential();
   const server = new McpServer(
     {
       name: config.serverName,
@@ -66,7 +76,9 @@ function buildServer(): McpServer {
         prompts: {}
       },
       instructions:
-        "Agent Commerce MCP — agent-native storefront for 14 products and 9 deployed MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, buy with `create_checkout` (Stripe live), and earn 15-30% commission as an affiliate via `register_affiliate`. Only use `request_product_consultation` after the buyer explicitly asks to be contacted."
+        writeToolsEnabled
+          ? "Agent Commerce MCP — agent-native storefront for 14 products and 11 MCP servers. Anonymous clients can discover products with `search_products` or `get_recommendation` and see pricing with `get_pricing`. Stateful tools (`create_checkout`, `register_affiliate`, `request_partnership`, `request_product_consultation`) require either `Authorization: Bearer <token>` or `X-Agent-Commerce-API-Key: <token>`. Only use `request_product_consultation` after the buyer explicitly asks to be contacted."
+          : "Agent Commerce MCP — read-only agent-native storefront for 14 products and 11 MCP servers. Discover products with `search_products` or `get_recommendation`, see pricing with `get_pricing`, fetch free-tier access, and verify vendor trust. Stateful commerce tools are disabled because no write credential is configured."
     }
   );
 
@@ -112,15 +124,17 @@ function buildServer(): McpServer {
     getPricingTool as any
   );
 
-  server.registerTool(
-    "create_checkout",
-    {
-      title: "Create checkout session",
-      description: "Create a live Stripe (or Gumroad) checkout URL for the buyer. Pass `referral_code` to credit an affiliate.",
-      inputSchema: createCheckoutInput
-    },
-    createCheckoutTool as any
-  );
+  if (writeToolsEnabled) {
+    server.registerTool(
+      "create_checkout",
+      {
+        title: "Create checkout session",
+        description: "Create a live Stripe (or Gumroad) checkout URL for the buyer. Pass `referral_code` to credit an affiliate.",
+        inputSchema: createCheckoutInput
+      },
+      guardedWriteTool(createCheckoutTool, config.security.writeToken, localWriteAuthorized) as any
+    );
+  }
 
   server.registerTool(
     "get_free_tier",
@@ -142,15 +156,17 @@ function buildServer(): McpServer {
     getMcpInstallTool as any
   );
 
-  server.registerTool(
-    "request_product_consultation",
-    {
-      title: requestProductConsultationTitle,
-      description: requestProductConsultationDescription,
-      inputSchema: requestProductConsultationInput
-    },
-    requestProductConsultationTool as any
-  );
+  if (writeToolsEnabled) {
+    server.registerTool(
+      "request_product_consultation",
+      {
+        title: requestProductConsultationTitle,
+        description: requestProductConsultationDescription,
+        inputSchema: requestProductConsultationInput
+      },
+      guardedWriteTool(requestProductConsultationTool, config.security.writeToken, localWriteAuthorized) as any
+    );
+  }
 
   server.registerTool(
     "get_affiliate_info",
@@ -162,25 +178,27 @@ function buildServer(): McpServer {
     getAffiliateInfoTool as any
   );
 
-  server.registerTool(
-    "register_affiliate",
-    {
-      title: "Register as an affiliate",
-      description: "Instantly register an agent or operator as an affiliate. Returns a referral_code for use in create_checkout.",
-      inputSchema: registerAffiliateInput
-    },
-    registerAffiliateTool as any
-  );
+  if (writeToolsEnabled) {
+    server.registerTool(
+      "register_affiliate",
+      {
+        title: "Register as an affiliate",
+        description: "Instantly register an agent or operator as an affiliate. Returns a referral_code for use in create_checkout.",
+        inputSchema: registerAffiliateInput
+      },
+      guardedWriteTool(registerAffiliateTool, config.security.writeToken, localWriteAuthorized) as any
+    );
 
-  server.registerTool(
-    "request_partnership",
-    {
-      title: "Request a partnership",
-      description: "Submit a partnership proposal (cross-listing, joint bundle, embed, co-marketing). Reviewed in 3 business days.",
-      inputSchema: requestPartnershipInput
-    },
-    requestPartnershipTool as any
-  );
+    server.registerTool(
+      "request_partnership",
+      {
+        title: "Request a partnership",
+        description: "Submit a partnership proposal (cross-listing, joint bundle, embed, co-marketing). Reviewed in 3 business days.",
+        inputSchema: requestPartnershipInput
+      },
+      guardedWriteTool(requestPartnershipTool, config.security.writeToken, localWriteAuthorized) as any
+    );
+  }
 
   server.registerTool(
     "get_cross_sells",
@@ -265,7 +283,9 @@ function buildServer(): McpServer {
 
 // ─── Stdio transport ───────────────────────────────────────────────────────
 async function runStdio() {
-  const server = buildServer();
+  // Possession of the configured token in this local process authorizes stdio
+  // writes; unlike HTTP, stdio has no request headers to carry a credential.
+  const server = buildServer(true);
   const transport = new StdioServerTransport();
   await server.connect(transport);
   // Stay alive — stdio transport keeps process running.
@@ -276,6 +296,7 @@ async function runHttp() {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
   app.disable("x-powered-by");
+  if (config.security.trustProxy) app.set("trust proxy", 1);
 
   // Health for Railway healthcheck.
   app.get("/health", (_req, res) => {
@@ -283,38 +304,77 @@ async function runHttp() {
   });
 
   app.get("/", (_req, res) => {
-    res.json({
-      name: config.serverName,
-      version: config.serverVersion,
-      mcp_endpoint: "/mcp",
-      docs: "https://github.com/bch1212/agent-commerce-mcp",
-      products: 14,
-      mcp_servers: 9
-    });
+    res.json(serviceDescriptor());
   });
 
-  // Per-session transports keyed by Mcp-Session-Id.
-  const transports: Record<string, StreamableHTTPServerTransport> = {};
+  // Only MCP traffic consumes the per-client request budget. Railway health
+  // checks and the public service descriptor must remain reliably available.
+  app.use(["/mcp", "/mcp/"], rateLimitMiddleware());
+
+  interface SessionEntry {
+    transport: StreamableHTTPServerTransport;
+    lastSeen: number;
+  }
+  const transports = new Map<string, SessionEntry>();
+
+  const discardSession = (id: string, entry: SessionEntry) => {
+    transports.delete(id);
+    void entry.transport.close().catch(() => undefined);
+  };
+
+  const pruneExpiredSessions = (now = Date.now()) => {
+    for (const [id, entry] of transports) {
+      if (now - entry.lastSeen >= config.security.sessionTtlMs) discardSession(id, entry);
+    }
+  };
+
+  const makeRoomForNewSession = () => {
+    while (transports.size >= config.security.sessionMax) {
+      let oldest: [string, SessionEntry] | undefined;
+      for (const candidate of transports) {
+        if (!oldest || candidate[1].lastSeen < oldest[1].lastSeen) oldest = candidate;
+      }
+      if (!oldest) break;
+      discardSession(oldest[0], oldest[1]);
+    }
+  };
 
   const handleMcp = async (req: Request, res: Response) => {
+    if (rejectUnauthorizedStatefulToolCalls(req, res)) return;
+    pruneExpiredSessions();
+
     const sessionId = (req.headers["mcp-session-id"] as string) || undefined;
-    let transport = sessionId ? transports[sessionId] : undefined;
+    const entry = sessionId ? transports.get(sessionId) : undefined;
+    if (sessionId && !entry) {
+      res.status(404).json({ ok: false, error: "session_not_found" });
+      return;
+    }
+
+    let transport = entry?.transport;
+    if (entry) entry.lastSeen = Date.now();
 
     if (!transport) {
       transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: () => randomUUID(),
         onsessioninitialized: (id) => {
-          transports[id] = transport!;
+          // Enforce capacity only when admitting a new session. Existing
+          // sessions must remain usable when the registry is exactly full.
+          pruneExpiredSessions();
+          makeRoomForNewSession();
+          transports.set(id, { transport: transport!, lastSeen: Date.now() });
         }
       });
       transport.onclose = () => {
-        if (transport!.sessionId) delete transports[transport!.sessionId];
+        if (transport!.sessionId) transports.delete(transport!.sessionId);
       };
       const server = buildServer();
       await server.connect(transport);
     }
 
-    await transport.handleRequest(req, res, req.body);
+    await runWithWriteAuth(
+      requestHasWriteAuth(req.headers as Record<string, string | string[] | undefined>),
+      () => transport.handleRequest(req, res, req.body)
+    );
   };
 
   // Streamable HTTP serves all MCP traffic over a single endpoint.

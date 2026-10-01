@@ -1,9 +1,8 @@
-// Stripe provider — live checkout creation. Falls back to URL-based checkout
-// if the secret key isn't configured (so the catalog still works without
-// payment provisioning).
+// Stripe provider — live checkout creation. Stateful checkout requests fail
+// closed when Stripe is unavailable; read-only catalog discovery still works.
 import Stripe from "stripe";
 import { config } from "../config.js";
-import type { Product, ProductTier } from "../catalog.js";
+import type { CheckoutProduct, ProductTier } from "../catalog.js";
 
 let _stripe: Stripe | null = null;
 function client(): Stripe | null {
@@ -21,14 +20,22 @@ export interface CheckoutResult {
   metadata: Record<string, string>;
 }
 
+interface StripeCheckoutClient {
+  checkout: {
+    sessions: {
+      create(params: Stripe.Checkout.SessionCreateParams): Promise<{ url: string | null; id: string }>;
+    };
+  };
+}
+
 export async function createStripeCheckout(opts: {
-  product: Product;
+  product: CheckoutProduct;
   tier: ProductTier;
   email: string;
   referral_code?: string;
-}): Promise<CheckoutResult> {
+}, clientOverride?: StripeCheckoutClient): Promise<CheckoutResult> {
   const { product, tier, email, referral_code } = opts;
-  const c = client();
+  const c = clientOverride ?? client();
   const metadata: Record<string, string> = {
     product_slug: product.slug,
     tier: tier.name,
@@ -36,20 +43,8 @@ export async function createStripeCheckout(opts: {
   };
   if (referral_code) metadata.referral_code = referral_code;
 
-  // If we don't have a Stripe key, return a graceful fallback URL pointing to
-  // the product page. The agent can still hand the customer off.
   if (!c) {
-    const params = new URLSearchParams({
-      tier: tier.name,
-      email,
-      ...(referral_code ? { ref: referral_code } : {})
-    });
-    return {
-      checkout_url: `${product.url}/checkout?${params.toString()}`,
-      provider: "fallback",
-      test_mode: true,
-      metadata
-    };
+    throw new Error("Stripe checkout is not configured");
   }
 
   const isRecurring = tier.price_monthly != null || tier.price_yearly != null;
@@ -85,29 +80,17 @@ export async function createStripeCheckout(opts: {
       allow_promotion_codes: true,
       ...(referral_code ? { client_reference_id: referral_code } : {})
     });
+    if (!session.url) {
+      throw new Error("Stripe did not return a checkout URL");
+    }
     return {
-      checkout_url: session.url || `${product.url}`,
+      checkout_url: session.url,
       session_id: session.id,
       provider: "stripe",
       test_mode: config.stripe.isTest,
       metadata
     };
-  } catch (err: any) {
-    // Stripe price IDs in catalog are placeholders — most won't exist yet.
-    // Fall back to inline price_data via product page.
-    if (err && err.code === "resource_missing" && tier.stripe_price_id) {
-      return createStripeCheckout({
-        product,
-        tier: { ...tier, stripe_price_id: undefined },
-        email,
-        referral_code
-      });
-    }
-    return {
-      checkout_url: `${product.url}/checkout?tier=${encodeURIComponent(tier.name)}&email=${encodeURIComponent(email)}`,
-      provider: "fallback",
-      test_mode: config.stripe.isTest,
-      metadata: { ...metadata, error: err?.message || "stripe_error" }
-    };
+  } catch {
+    throw new Error("Stripe checkout creation failed");
   }
 }

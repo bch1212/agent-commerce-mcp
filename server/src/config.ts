@@ -1,10 +1,25 @@
 // Env-driven configuration. All values optional; server gracefully degrades.
 
+function positiveInt(value: string | undefined, fallback: number): number {
+  const parsed = Number.parseInt(value || "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 export const config = {
   serverName: process.env.MCP_SERVER_NAME || "agent-commerce-mcp",
-  serverVersion: "0.1.0",
-  port: parseInt(process.env.PORT || process.env.MCP_SERVER_PORT || "3100", 10),
+  serverVersion: "0.1.3",
+  port: positiveInt(process.env.PORT || process.env.MCP_SERVER_PORT, 3100),
   transport: (process.env.MCP_TRANSPORT || "auto") as "stdio" | "http" | "auto",
+  security: {
+    writeToken: process.env.AGENT_COMMERCE_WRITE_TOKEN || process.env.MCP_WRITE_TOKEN || "",
+    apiKeyHeader: "x-agent-commerce-api-key",
+    trustProxy: /^(1|true|yes)$/i.test(process.env.TRUST_PROXY || process.env.MCP_TRUST_PROXY || ""),
+    rateLimitWindowMs: positiveInt(process.env.MCP_RATE_LIMIT_WINDOW_MS, 60000),
+    rateLimitMaxRequests: positiveInt(process.env.MCP_RATE_LIMIT_MAX_REQUESTS, 120),
+    rateLimitMaxClients: positiveInt(process.env.MCP_RATE_LIMIT_MAX_CLIENTS, 10000),
+    sessionMax: positiveInt(process.env.MCP_SESSION_MAX, 1000),
+    sessionTtlMs: positiveInt(process.env.MCP_SESSION_TTL_MS, 1800000)
+  },
   stripe: {
     secretKey: process.env.STRIPE_SECRET_KEY || process.env.STRIPE_TEST_SECRET_KEY || "",
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
@@ -16,7 +31,7 @@ export const config = {
     accessToken: process.env.GUMROAD_ACCESS_TOKEN || ""
   },
   agentTrust: {
-    endpoint: process.env.AGENTTRUST_MCP_ENDPOINT || "https://mcp-agenttrust-production.up.railway.app/mcp",
+    endpoint: process.env.AGENTTRUST_MCP_ENDPOINT || "https://agenttrust-mcp-production.up.railway.app/mcp",
     vendorId: process.env.AGENTTRUST_VENDOR_ID || "halversoniq"
   },
   salesbot: {

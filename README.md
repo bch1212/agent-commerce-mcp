@@ -5,10 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-server-blue)](https://modelcontextprotocol.io)
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 9 deployed MCP servers.
-> Discovery, pricing, Stripe live checkout, affiliate program (15-30% recurring), AgentTrust verification — all over one MCP server.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 11 MCP servers.
+> Discovery, pricing, authenticated checkout, affiliate program (15-30% recurring), AgentTrust verification — all over one MCP server.
 
-This is a working, autonomous A2A commerce layer. Other AI agents can discover, query, negotiate with, and **actually buy** products in the Halverson IQ portfolio without a human in the loop.
+This is a working A2A commerce layer. Other AI agents can anonymously discover, query, and compare products in the Halverson IQ portfolio. Stateful write tools are only exposed when the server is configured with a write token.
 
 ## Install
 
@@ -38,7 +38,28 @@ https://commerce.halversonco.com/mcp
 
 ## Configuration
 
+Public read-only tools are anonymous by default. Set `AGENT_COMMERCE_WRITE_TOKEN` (or legacy `MCP_WRITE_TOKEN`) to advertise and execute stateful tools:
+
+- `create_checkout`
+- `register_affiliate`
+- `request_partnership`
+- `request_product_consultation`
+
+When the write token is absent, those tools are not advertised and direct calls are rejected fail-closed. When it is present, HTTP clients must send either:
+
+```http
+Authorization: Bearer <AGENT_COMMERCE_WRITE_TOKEN>
+```
+
+or:
+
+```http
+X-Agent-Commerce-API-Key: <AGENT_COMMERCE_WRITE_TOKEN>
+```
+
 Set `SALESBOT_LEAD_CAPTURE_URL` to the Salesbot `POST /leads/capture` URL to enable opt-in consultation capture. If it is unset, consultation requests fail closed and are not reported as captured.
+
+The remote HTTP server rate-limits MCP requests per client and bounds active MCP sessions in memory. By default it uses the direct socket IP. Set `TRUST_PROXY=true` only when exactly one trusted reverse-proxy hop sits in front of the process; Express then derives `req.ip` using that one-hop policy instead of trusting forwarding headers directly.
 
 ## Tools
 
@@ -49,7 +70,7 @@ Set `SALESBOT_LEAD_CAPTURE_URL` to the Salesbot `POST /leads/capture` URL to ena
 
 **Purchase**
 - `get_pricing(product_slug, tier?, billing?)` — full breakdown
-- `create_checkout(product_slug, tier, email, referral_code?)` — **live Stripe URL**
+- `create_checkout(product_slug, tier, email, referral_code?)` — authenticated checkout URL
 - `get_free_tier(product_slug)` — instant access (signup URL or install command)
 - `get_mcp_install(product_slug, client)` — exact install snippet for claude_desktop / claude_code / cursor / cline / windsurf
 
@@ -88,7 +109,7 @@ commerce://affiliate/program
 **SaaS:** CastIQ · GrantIQ · FocusIQ · Catholic Daily
 **Developer:** AgentFetch · QueryShield · InjectShield · ModelWatch · ComplianceBeacon · RegImpact
 **Services:** Branded Audits · LeadVault · JobAuditor · Halverson IQ Digital Library
-**MCP Servers:** GrantIQ · OutdoorIQ · BizIntel · AgentTrust · PubRecords · QueryShield · InjectShield · ModelWatch
+**MCP Servers:** AgentFetch · GrantIQ · OutdoorIQ · BizIntel · AgentTrust · PubRecords · QueryShield · InjectShield · ModelWatch · Agent Commerce · AgentVault
 
 **Bundles:** AI Security Stack (20% off) · Agency Growth Kit (15% off) · AI Builder Essentials (15% off)
 

@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { affiliates, getProduct } from "../catalog.js";
 import { track } from "../analytics/tracker.js";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -178,18 +178,33 @@ export async function requestPartnershipTool(args: {
   contact_email: string;
   integration_type?: string;
 }) {
-  // Persist to disk; the outreach engine and Brett will see them in the dashboard.
-  const PIPE = process.env.PARTNERSHIP_PIPE || "/tmp/agent-commerce-mcp/partnerships.jsonl";
+  // Acknowledge only after the proposal has been durably appended.
+  const pipe = process.env.PARTNERSHIP_PIPE || "/tmp/agent-commerce-mcp/partnerships.jsonl";
+  const receivedAt = new Date().toISOString();
+  const proposalId = createHash("sha256")
+    .update(args.proposal + args.agent_id + Date.now())
+    .digest("hex")
+    .slice(0, 12);
   try {
-    const dir = dirname(PIPE);
+    const dir = dirname(pipe);
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-    const fs = require("node:fs") as typeof import("node:fs");
-    fs.appendFileSync(
-      PIPE,
-      JSON.stringify({ ...args, ts: new Date().toISOString() }) + "\n"
+    appendFileSync(
+      pipe,
+      JSON.stringify({ ...args, proposal_id: proposalId, ts: receivedAt }) + "\n"
     );
   } catch {
-    // ignore — the response below still acknowledges receipt
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify({
+            ok: false,
+            error: "Unable to persist the partnership request. Nothing was submitted; retry later."
+          })
+        }
+      ]
+    };
   }
   track({ tool: "request_partnership", action: "affiliate", metadata: { agent_id: args.agent_id, type: args.integration_type } });
 
@@ -200,11 +215,8 @@ export async function requestPartnershipTool(args: {
         text: JSON.stringify(
           {
             ok: true,
-            received_at: new Date().toISOString(),
-            proposal_id: createHash("sha256")
-              .update(args.proposal + args.agent_id + Date.now())
-              .digest("hex")
-              .slice(0, 12),
+            received_at: receivedAt,
+            proposal_id: proposalId,
             next_step:
               "Brett (founder) reviews partnership requests within 3 business days. You'll receive a follow-up email at the address provided.",
             tip:

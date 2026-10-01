@@ -16,7 +16,8 @@ export async function searchProductsTool(args: {
   budget_max?: number;
   use_case?: string;
 }) {
-  const matches = searchProducts(args).slice(0, 10);
+  const resultLimit = args.category === "mcp" ? catalog.mcp_servers.length : 10;
+  const matches = searchProducts(args).slice(0, resultLimit);
   track({
     tool: "search_products",
     action: "browse",

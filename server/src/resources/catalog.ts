@@ -37,7 +37,7 @@ export function listResources(): ResourceDescriptor[] {
     {
       uri: "commerce://catalog/mcp-servers",
       name: "MCP Servers",
-      description: "Deployed MCP servers (GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch)",
+      description: "11 deployed MCP servers (AgentFetch, GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault)",
       mimeType: "application/json"
     },
     {

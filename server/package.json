@@ -34,7 +34,9 @@
   ],
   "mcpName": "io.github.bch1212/agent-commerce-mcp",
   "scripts": {
-    "build": "tsc",
+    "copy:catalog": "node scripts/copy-catalog.mjs",
+    "build": "tsc && npm run copy:catalog",
+    "prepack": "npm run build",
     "start": "node dist/index.js",
     "start:http": "MCP_TRANSPORT=http node dist/index.js",
     "dev": "tsx src/index.ts",
@@ -43,7 +45,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.18.0",
-    "express": "^4.21.2",
+    "express": "^4.22.3",
     "stripe": "^18.0.0",
     "zod": "^3.23.8"
   },
