@@ -11,6 +11,7 @@ test("runtime, npm package, and MCP Registry manifest share release version", as
   const packageJson = JSON.parse(await readFile(packageUrl, "utf8")) as { version: string };
   const manifest = JSON.parse(await readFile(manifestUrl, "utf8")) as {
     version: string;
+    description: string;
     packages: Array<{ version: string }>;
   };
 
@@ -18,4 +19,5 @@ test("runtime, npm package, and MCP Registry manifest share release version", as
   assert.equal(config.serverVersion, packageJson.version);
   assert.equal(manifest.version, packageJson.version);
   assert.equal(manifest.packages[0]?.version, packageJson.version);
+  assert.ok(manifest.description.length <= 100, "Registry description must fit the 100-character schema limit");
 });
