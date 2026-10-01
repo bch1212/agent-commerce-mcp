@@ -6,6 +6,8 @@ WORKDIR /app/server
 RUN npm install --no-audit --no-fund
 
 COPY server/src ./src
+COPY server/scripts ./scripts
+COPY catalog /app/catalog
 RUN npm run build
 
 FROM node:20-alpine AS runtime
