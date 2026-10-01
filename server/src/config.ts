@@ -1,5 +1,10 @@
 // Env-driven configuration. All values optional; server gracefully degrades.
 
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const { version: packageVersion } = require("../package.json") as { version: string };
+
 function positiveInt(value: string | undefined, fallback: number): number {
   const parsed = Number.parseInt(value || "", 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
@@ -7,7 +12,7 @@ function positiveInt(value: string | undefined, fallback: number): number {
 
 export const config = {
   serverName: process.env.MCP_SERVER_NAME || "agent-commerce-mcp",
-  serverVersion: "0.1.3",
+  serverVersion: packageVersion,
   port: positiveInt(process.env.PORT || process.env.MCP_SERVER_PORT, 3100),
   transport: (process.env.MCP_TRANSPORT || "auto") as "stdio" | "http" | "auto",
   security: {

@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.bch1212/agent-commerce-mcp",
-  "description": "Agent Commerce MCP — agent-native A2A storefront. Anonymous discovery with authenticated checkout and affiliate writes.",
+  "description": "Agent-native storefront for discovering, installing, and safely purchasing MCP products.",
   "repository": {
     "url": "https://github.com/bch1212/agent-commerce-mcp",
     "source": "github"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "agent-commerce-mcp",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "transport": {
         "type": "stdio"
       }
