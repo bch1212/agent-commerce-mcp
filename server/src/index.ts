@@ -13,6 +13,7 @@ import { z } from "zod";
 import { randomUUID } from "node:crypto";
 
 import { config } from "./config.js";
+import { serviceDescriptor } from "./service-descriptor.js";
 import { listResources, readResource } from "./resources/catalog.js";
 import {
   guardedWriteTool,
@@ -303,14 +304,7 @@ async function runHttp() {
   });
 
   app.get("/", (_req, res) => {
-    res.json({
-      name: config.serverName,
-      version: config.serverVersion,
-      mcp_endpoint: "/mcp",
-      docs: "https://github.com/bch1212/agent-commerce-mcp",
-      products: 14,
-      mcp_servers: 9
-    });
+    res.json(serviceDescriptor());
   });
 
   // Only MCP traffic consumes the per-client request budget. Railway health
