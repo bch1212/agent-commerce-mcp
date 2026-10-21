@@ -126,7 +126,7 @@ test("standalone paid MCP tiers without automatic entitlement never create a pay
   let stripeCalls = 0;
   const result = await createCheckoutTool(
     {
-      product_slug: "bizintel_mcp",
+      product_slug: "pubrecords_mcp",
       tier: "Pro",
       email: "buyer@example.com",
     },
@@ -143,14 +143,14 @@ test("standalone paid MCP tiers without automatic entitlement never create a pay
   assert.deepEqual(payload(result), {
     ok: false,
     status: "activation_required",
-    product: { slug: "bizintel_mcp", name: "BizIntel MCP" },
+    product: { slug: "pubrecords_mcp", name: "PubRecords MCP" },
     tier: "Pro",
     checkout_required: false,
     purchase_available: false,
     error: "Paid checkout is unavailable because automatic entitlement provisioning is not configured for this MCP server.",
     action: {
       type: "contact_support",
-      url: "https://github.com/bch1212/mcp-bizintel/issues/new",
+      url: "https://github.com/bch1212/mcp-pubrecords/issues/new",
       instructions: "Contact support to arrange activation before making any payment.",
     },
   });
