@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { catalog } from "../src/catalog.js";
+import { bundles, catalog, crossSell } from "../src/catalog.js";
 import { searchProductsTool } from "../src/tools/discovery.js";
+import { getCrossSellsTool } from "../src/tools/cross-sell.js";
 import { getFreeTierTool, getMcpInstallTool } from "../src/tools/purchase.js";
 
 function payload(result: { content: Array<{ text: string }> }) {
@@ -36,24 +37,6 @@ const expectedMcps = [
     install_command: undefined,
     registry_id: "io.github.bch1212/outdooriq-mcp",
     repository: "https://github.com/bch1212/outdooriq-mcp",
-  },
-  {
-    slug: "bizintel_mcp",
-    name: "BizIntel MCP",
-    endpoint: "https://mcp-bizintel-production.up.railway.app/mcp",
-    npm: undefined,
-    install_command: undefined,
-    registry_id: "io.github.bch1212/bizintel",
-    repository: "https://github.com/bch1212/mcp-bizintel",
-  },
-  {
-    slug: "agenttrust_mcp",
-    name: "AgentTrust MCP",
-    endpoint: "https://agenttrust-mcp-production.up.railway.app/mcp",
-    npm: undefined,
-    install_command: undefined,
-    registry_id: "io.github.bch1212/agenttrust",
-    repository: "https://github.com/bch1212/agenttrust-mcp",
   },
   {
     slug: "pubrecords_mcp",
@@ -111,7 +94,7 @@ const expectedMcps = [
   },
 ] as const;
 
-test("catalog exposes the complete canonical 11-MCP portfolio", () => {
+test("catalog exposes the complete canonical 9-MCP portfolio", () => {
   assert.equal(catalog.mcp_servers.length, expectedMcps.length);
   assert.deepEqual(
     catalog.mcp_servers.map((mcp) => mcp.slug),
@@ -185,13 +168,13 @@ test("AgentVault advertises only its working stdio package", () => {
   assert.equal(vault.install_command, "npx -y agentvault-mcp");
   assert.equal(vault.endpoint, undefined);
   assert.equal(vault.alt_endpoint, undefined);
+  assert.match(vault.description, /folds into the QueryShield agent security suite/);
 });
 
 test("catalog models every known required MCP credential", () => {
   const expected = new Map([
     ["grantiq_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
     ["outdooriq_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
-    ["bizintel_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
     ["pubrecords_mcp", ["header", "X-API-Key", "<YOUR_X_API_KEY>"]],
     ["injectshield_mcp", ["env", "INJECTSHIELD_API_KEY", "<YOUR_INJECTSHIELD_API_KEY>"]],
     ["modelwatch_mcp", ["env", "MODELWATCH_API_KEY", "<YOUR_MODELWATCH_API_KEY>"]],
@@ -267,12 +250,119 @@ test("stdio install outputs include required API-key environment placeholders", 
   ]);
 });
 
-test("category=mcp discovery returns the complete 11-server portfolio", async () => {
+test("category=mcp discovery returns the complete 9-server portfolio", async () => {
   const body = payload(await searchProductsTool({ query: "mcp", category: "mcp" }));
-  assert.equal(body.count, 11);
+  assert.equal(body.count, 9);
   assert.deepEqual(
     new Set(body.results.map((result: { slug: string }) => result.slug)),
     new Set(catalog.mcp_servers.map((entry) => entry.slug)),
   );
   assert.ok(body.results.every((result: { category: string }) => result.category === "mcp"));
+});
+
+const retiredSlugs = [
+  "agenttrust",
+  "agenttrust_mcp",
+  "agentfetch-reddit-listener",
+  "bizintel",
+  "bizintel_mcp",
+  "mcp-bizintel",
+  "airbnb-guidebook-concierge-kit",
+  "bad-review-save-kit",
+  "cleaning-sop-qa-pack",
+  "escape-room-empty-slot-recovery",
+  "gbp-quick-win-audit",
+  "missed-call-rescue-kit",
+  "no-show-leak-fix-groomers",
+  "saas-homepage-teardown-sprint",
+  "testimonial-proof-pack",
+  "venue-inquiry-leak-audit",
+  "venue-inquiry-response-audit",
+];
+
+test("retired offers are absent from the catalog and search results", async () => {
+  const listed = new Set([...catalog.products, ...catalog.mcp_servers].map((entry) => entry.slug));
+  for (const slug of retiredSlugs) {
+    assert.equal(listed.has(slug), false, `${slug} must not be offered`);
+  }
+
+  for (const query of ["agenttrust", "bizintel", "mcp-bizintel", "airbnb guidebook concierge kit", "venue inquiry leak"]) {
+    const body = payload(await searchProductsTool({ query }));
+    for (const result of body.results as Array<{ slug: string }>) {
+      assert.equal(retiredSlugs.includes(result.slug), false, `${query} recommended ${result.slug}`);
+    }
+  }
+});
+
+test("consolidated entries keep their existing endpoints and describe the new portfolio", () => {
+  const grantIq = catalog.products.find((product) => product.slug === "grantiq");
+  const grantMcp = catalog.mcp_servers.find((entry) => entry.slug === "grantiq_mcp");
+  const pubRecords = catalog.mcp_servers.find((entry) => entry.slug === "pubrecords_mcp");
+  const outdoor = catalog.mcp_servers.find((entry) => entry.slug === "outdooriq_mcp");
+  const modelWatch = catalog.products.find((product) => product.slug === "modelwatch");
+  const modelWatchMcp = catalog.mcp_servers.find((entry) => entry.slug === "modelwatch_mcp");
+  const queryShield = catalog.products.find((product) => product.slug === "queryshield");
+  const daily = catalog.products.find((product) => product.slug === "catholic_daily");
+  const securityStack = bundles.find((bundle) => bundle.slug === "ai_security_stack");
+
+  assert.ok(grantIq && grantMcp && pubRecords && outdoor && modelWatch && modelWatchMcp && queryShield && daily && securityStack);
+
+  assert.equal(grantIq.url, "https://grantiq.us");
+  assert.equal(grantMcp.endpoint, "https://mcp.grantiq.us/mcp/");
+  assert.equal(pubRecords.endpoint, "https://mcp-pubrecords-production.up.railway.app/mcp/");
+  assert.equal(outdoor.endpoint, "https://mcp.castiq.net/mcp");
+  assert.match(grantIq.description, /Halverson IQ Data/);
+  assert.match(grantMcp.description, /Halverson IQ Data/);
+  assert.match(pubRecords.description, /Halverson IQ Data/);
+  assert.match(outdoor.description, /CastIQ API tier/);
+  assert.match(modelWatch.description, /ToolPulse is now part of ModelWatch for tool monitoring/);
+  assert.match(modelWatchMcp.description, /ToolPulse is now part of ModelWatch for tool monitoring/);
+  assert.match(queryShield.description, /QueryShield agent security suite/);
+  assert.deepEqual(securityStack.products, ["injectshield", "queryshield", "modelwatch"]);
+  assert.equal(securityStack.products.includes("agentvault"), false);
+
+  assert.equal(daily.name, "Catholic Daily");
+  assert.equal(daily.url, "https://catholicdaily.app");
+  assert.equal(daily.tagline, "Daily Mass readings, saints, and prayer for Catholic faithful");
+  assert.equal(
+    daily.description,
+    "AI-curated daily readings, saint stories, and contemplative prayer prompts. Designed for daily use by Catholic faithful.",
+  );
+
+  assert.equal(crossSell.graph.branded_audits.includes("bizintel_mcp"), false);
+  assert.equal(crossSell.graph.leadvault.includes("bizintel_mcp"), false);
+
+  const changeOrder = [...catalog.products, ...catalog.mcp_servers].find(
+    (entry) => entry.slug === "changeorderfast",
+  );
+  if (changeOrder) {
+    assert.equal(retiredSlugs.includes(changeOrder.slug), false);
+  }
+});
+
+test("Halverson IQ Data searches keep the existing GrantIQ and PubRecords entries", async () => {
+  const body = payload(await searchProductsTool({ query: "Halverson IQ Data" }));
+  const slugs = body.results.map((result: { slug: string }) => result.slug);
+  assert.ok(slugs.includes("grantiq"));
+  assert.ok(slugs.includes("grantiq_mcp"));
+  assert.ok(slugs.includes("pubrecords_mcp"));
+  assert.equal(body.results.every((result: { url?: string }) => !String(result.url).includes("halverson-iq-data")), true);
+});
+
+test("ToolPulse searches resolve to ModelWatch", async () => {
+  const body = payload(await searchProductsTool({ query: "toolpulse" }));
+  const slugs = body.results.map((result: { slug: string }) => result.slug);
+  assert.ok(slugs.includes("modelwatch"));
+  assert.ok(slugs.includes("modelwatch_mcp"));
+  assert.equal(slugs.includes("toolpulse"), false);
+});
+
+test("cross-sells do not route buyers to retired BizIntel", async () => {
+  for (const slug of ["branded_audits", "leadvault"]) {
+    const body = payload(await getCrossSellsTool({ current_product: slug }));
+    assert.ok(
+      body.related_products.every((product: { slug: string }) => product.slug !== "bizintel_mcp"),
+      `${slug} still cross-sells BizIntel`,
+    );
+  }
 });

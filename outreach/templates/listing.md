@@ -1,6 +1,6 @@
 # Agent Commerce MCP
 
-> **Agent-native storefront** for 14 SaaS/dev/service products and 11 MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
+> **Agent-native storefront** for 14 SaaS/dev/service products and 9 MCP servers — discovery, pricing, Stripe checkout, affiliate program, and AgentTrust verification, all over one MCP server.
 
 ## Why list this server
 
@@ -56,7 +56,9 @@ trust: `get_trust_score`, `verify_vendor`
 **SaaS:** CastIQ, GrantIQ, FocusIQ, Catholic Daily  
 **Developer:** AgentFetch, QueryShield, InjectShield, ModelWatch, ComplianceBeacon, RegImpact  
 **Services:** Branded Audits, LeadVault, JobAuditor, Halverson IQ Digital Library  
-**MCP servers:** AgentFetch, GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault
+**MCP servers:** AgentFetch, GrantIQ, OutdoorIQ, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault
+
+GrantIQ and PubRecords are part of Halverson IQ Data; their existing URLs stay in place because no separate listing URL is published yet. OutdoorIQ is the CastIQ API tier. ToolPulse tool monitoring is part of ModelWatch. AgentVault folds into the QueryShield agent security suite. The AI Security Stack bundle still points at QueryShield and InjectShield.
 
 ## License
 

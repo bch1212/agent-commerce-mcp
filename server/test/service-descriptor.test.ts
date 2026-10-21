@@ -10,5 +10,5 @@ test("public service descriptor derives catalog counts from the runtime catalog"
   assert.equal(descriptor.products, catalog.products.length);
   assert.equal(descriptor.mcp_servers, catalog.mcp_servers.length);
   assert.equal(descriptor.products, 14);
-  assert.equal(descriptor.mcp_servers, 11);
+  assert.equal(descriptor.mcp_servers, 9);
 });

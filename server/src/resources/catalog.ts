@@ -19,13 +19,13 @@ export function listResources(): ResourceDescriptor[] {
     {
       uri: "commerce://catalog/saas",
       name: "SaaS Products",
-      description: "Subscription SaaS products (CastIQ, GrantIQ, FocusIQ, Catholic Daily)",
+      description: "Subscription SaaS products (CastIQ, GrantIQ, FocusIQ, Catholic Daily). GrantIQ is part of Halverson IQ Data.",
       mimeType: "application/json"
     },
     {
       uri: "commerce://catalog/developer",
       name: "Developer Tools",
-      description: "AI/dev tools (AgentFetch, QueryShield, InjectShield, ModelWatch, ComplianceBeacon, RegImpact)",
+      description: "AI/dev tools (AgentFetch, QueryShield, InjectShield, ModelWatch, ComplianceBeacon, RegImpact). ModelWatch includes ToolPulse tool monitoring. AgentVault folds into the QueryShield agent security suite.",
       mimeType: "application/json"
     },
     {
@@ -37,7 +37,7 @@ export function listResources(): ResourceDescriptor[] {
     {
       uri: "commerce://catalog/mcp-servers",
       name: "MCP Servers",
-      description: "11 deployed MCP servers (AgentFetch, GrantIQ, OutdoorIQ, BizIntel, AgentTrust, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault)",
+      description: "9 deployed MCP servers (AgentFetch, GrantIQ, OutdoorIQ, PubRecords, QueryShield, InjectShield, ModelWatch, Agent Commerce, AgentVault). GrantIQ and PubRecords belong to Halverson IQ Data. OutdoorIQ is the CastIQ API tier. ModelWatch includes ToolPulse tool monitoring. AgentVault folds into the QueryShield agent security suite.",
       mimeType: "application/json"
     },
     {
